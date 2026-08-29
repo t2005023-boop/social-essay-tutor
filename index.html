@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>社会科 論述トレーニング＆AI添削アプリ (Chromebook / Googleスプレッドシート対応)</title>
+  <link rel="stylesheet" href="css/style.css?v=20260829102934">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>社会科 論述力向上トレーニング</h1>
+    <p>Chromebook対応！単元・時代別絞り込み機能 ＆ 高校入試標準114問（全問模範解答付き）</p>
+  </header>
+
+  <!-- Googleスプレッドシート連携ステータスバー -->
+  <div class="gas-status-bar" id="gas-status-bar">
+    <div class="gas-status-info">
+      <span class="gas-icon">📊</span>
+      <span>Googleスプレッドシート連携: <strong id="gas-status-text">未設定（端末内保存のみ）</strong></span>
+    </div>
+    <button type="button" id="open-gas-modal-btn" class="gas-config-btn">⚙️ スプレッドシート連携設定</button>
+  </div>
+
+  <form id="essay-form">
+    <!-- ステップ1: 生徒情報 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="badge-step">STEP 1</span> 生徒情報を入力
+      </div>
+      <div class="grid-3">
+        <div class="form-group">
+          <label for="student-class">クラス <span class="required">*</span></label>
+          <select id="student-class" required>
+            <option value="">選択してください</option>
+            <option value="1組">1組</option>
+            <option value="2組">2組</option>
+            <option value="3組">3組</option>
+            <option value="4組">4組</option>
+            <option value="5組">5組</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="student-num">出席番号 <span class="required">*</span></label>
+          <input type="number" id="student-num" min="1" max="50" placeholder="例: 12" required>
+        </div>
+        <div class="form-group">
+          <label for="student-name">氏名 <span class="required">*</span></label>
+          <input type="text" id="student-name" placeholder="例: 青山 翔" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- ステップ2: レベルと分野と問題の選択 -->
+    <div class="card">
+      <div class="card-title">
+        <span class="badge-step">STEP 2</span> 挑戦レベル・分野・単元を選択
+      </div>
+
+      <!-- 難易度レベル選択タブ -->
+      <label style="margin-bottom: 8px;">🎯 1. 挑戦する入試レベルを選択:</label>
+      <div class="level-tabs">
+        <button type="button" class="level-tab-btn" data-level="junior_high">🎒 中学校入試レベル</button>
+        <button type="button" class="level-tab-btn active" data-level="high_school">🏫 高校入試・中学3年レベル (全114問)</button>
+        <button type="button" class="level-tab-btn" data-level="university">🎓 大学入試レベル</button>
+      </div>
+
+      <!-- 分野タブ -->
+      <label style="margin-bottom: 8px; margin-top: 14px;">📚 2. 演習分野を選択:</label>
+      <div class="field-tabs">
+        <button type="button" class="tab-btn active" data-field="geography">🌏 地理的分野</button>
+        <button type="button" class="tab-btn" data-field="history">📜 歴史的分野</button>
+        <button type="button" class="tab-btn" data-field="civics">🏛️ 公民的分野</button>
+      </div>
+
+      <!-- 単元・小分野（カテゴリ・時代）絞り込みドロップダウン -->
+      <div class="form-group" style="margin-top: 14px; background: #f0f9ff; padding: 12px; border-radius: 8px; border: 1.5px solid #bae6fd;">
+        <label for="category-select" style="color: #0369a1; font-weight: 700;">
+          📂 3. 単元・時代（小分野）で絞り込む:
+        </label>
+        <select id="category-select" style="border-color: #7dd3fc; font-weight: 600;"></select>
+      </div>
+
+      <div class="form-group" style="margin-top: 14px;">
+        <label for="problem-select">📖 4. 演習問題を選択してください:</label>
+        <select id="problem-select"></select>
+      </div>
+
+      <!-- 選択された問題の表示 -->
+      <div id="problem-card" class="problem-card">
+        <div class="problem-tags" id="problem-tags"></div>
+        <div class="problem-question" id="problem-question"></div>
+        <div class="keywords-hint" id="problem-hints"></div>
+        
+        <!-- 初心者向け書き方ステップガイド -->
+        <div class="writing-guide-box" id="problem-guide"></div>
+
+        <!-- 模範解答例アコーディオン（クリックで開閉） -->
+        <div class="sample-answer-wrapper" style="margin-top: 14px;">
+          <button type="button" id="toggle-sample-btn" class="toggle-sample-btn">
+            <span>💡 模範解答例を見る（クリックで開く）</span>
+          </button>
+          <div id="sample-answer-box" class="sample-answer-box" style="display: none;">
+            <div class="sample-answer-header">📖 模範解答例</div>
+            <div id="sample-answer-text" class="sample-answer-content"></div>
+            <div class="sample-answer-note">※ まずは自力で解答を作成してから、自分の文章と比較してみましょう！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ステップ3: 論述記述（下書きメモ機能付き） -->
+    <div class="card">
+      <div class="card-title">
+        <span class="badge-step">STEP 3</span> あなたの論述を記述
+      </div>
+
+      <!-- 箇条書きメモ用の補助アコーディオン -->
+      <details class="scratchpad-details">
+        <summary class="scratchpad-summary">📝 【論述が苦手な人向け】まず箇条書きでアイデアをメモする（クリックで開閉）</summary>
+        <div class="scratchpad-content">
+          <p class="scratchpad-tip">いきなり文章を書かずに、思いついた理由や用語をメモしてみましょう！</p>
+          <textarea id="scratchpad-input" rows="3" placeholder="・理由①：〇〇だから&#10;・理由②：その結果、〇〇になるから"></textarea>
+        </div>
+      </details>
+
+      <div class="form-group" style="margin-top: 14px;">
+        <label for="answer-input">論述・清書欄 <span class="required">*</span></label>
+        <textarea id="answer-input" rows="6" placeholder="箇条書きにしたアイデアを「なぜなら〜」「その結果〜」などの言葉でつなげて文章にまとめましょう..." required></textarea>
+        <div class="char-counter-bar">
+          <span id="char-guide">目安: 70〜160文字</span>
+          <span>現在の文字数: <strong id="char-count">0</strong> 文字</span>
+        </div>
+      </div>
+
+      <button type="submit" id="submit-btn" class="submit-btn">
+        <span>✨ AI添削を受ける ＆ 提出する</span>
+      </button>
+    </div>
+  </form>
+
+  <!-- 添削結果カード -->
+  <div id="result-container" class="card">
+    <div class="card-title">
+      <span class="badge-step">RESULT</span> 添削・推敲フィードバック
+    </div>
+
+    <!-- ランクヘッダー -->
+    <div id="rank-box" class="rank-header">
+      <div id="rank-badge" class="rank-badge">A</div>
+      <div>
+        <div id="rank-title" class="rank-title">評価結果</div>
+        <div id="rank-engine" class="rank-subtitle"></div>
+      </div>
+    </div>
+
+    <!-- 良かった点（詳細分析） -->
+    <div class="feedback-section">
+      <div class="fb-heading fb-good">
+        <span>👍</span> 良かった点（捉えられている視点の詳細分析）
+      </div>
+      <div id="fb-good-text" class="fb-body"></div>
+    </div>
+
+    <!-- 具体的推敲ステップ・A判定ナビ -->
+    <div class="feedback-section fb-highlight-section">
+      <div class="fb-heading fb-improve">
+        <span>🌟</span> A判定にするための最短ナビ（加筆・修正のポイント）
+      </div>
+      <div id="fb-advice-text" class="fb-body fb-advice-body"></div>
+    </div>
+
+    <!-- 思考を深める問いかけ -->
+    <div class="feedback-section">
+      <div class="fb-heading fb-question">
+        <span>❓</span> 自力で考えを深める推敲の問いかけ
+      </div>
+      <div id="fb-question-text" class="fb-body"></div>
+    </div>
+
+    <!-- 添削結果内の模範解答トグル -->
+    <div class="feedback-section" style="border-top: 1px dashed #cbd5e1; padding-top: 14px; margin-top: 14px;">
+      <button type="button" id="toggle-result-sample-btn" class="toggle-sample-btn" style="background:#f1f5f9; color:#334155; border-color:#cbd5e1;">
+        <span>💡 模範解答例と見比べる（クリックで表示）</span>
+      </button>
+      <div id="result-sample-answer-box" class="sample-answer-box" style="display: none; margin-top: 10px;">
+        <div class="sample-answer-header">📖 模範解答例</div>
+        <div id="result-sample-answer-text" class="sample-answer-content"></div>
+      </div>
+    </div>
+
+    <div class="retry-action">
+      <button type="button" id="rewrite-btn" class="retry-btn">📝 アドバイスを参考に再推敲（清書欄へ戻る）</button>
+    </div>
+  </div>
+
+  <!-- 学習履歴・提出ログカード -->
+  <div class="card" style="margin-top: 24px;">
+    <div class="card-title" style="justify-content: space-between; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="badge-step" style="background:#059669;">LOGS</span>
+        <span>📊 学習履歴・提出ログ記録</span>
+        <span id="log-count-badge" class="tag" style="background:#d1fae5; color:#065f46; font-size:0.8rem;">0件</span>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 6px;">
+        <button type="button" id="export-csv-btn" class="log-action-btn export-btn">
+          <span>📥 CSVダウンロード</span>
+        </button>
+        <button type="button" id="clear-logs-btn" class="log-action-btn clear-btn">
+          <span>🗑️ 履歴消去</span>
+        </button>
+      </div>
+    </div>
+
+    <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 12px;">
+      ※ Chromebookで添削を受けると、設定した教員のGoogleスプレッドシートへ自動送信・追記されます。
+    </p>
+
+    <div class="table-responsive">
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th>提出日時</th>
+            <th>クラス</th>
+            <th>番号</th>
+            <th>氏名</th>
+            <th>演習問題</th>
+            <th>文字数</th>
+            <th>判定</th>
+            <th>論述内容</th>
+          </tr>
+        </thead>
+        <tbody id="log-table-body">
+          <!-- JSで自動描画 -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Googleスプレッドシート連携設定モーダル -->
+<div id="gas-modal" class="modal-overlay" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>📊 Googleスプレッドシート連携設定（教員用）</h2>
+      <button type="button" id="close-gas-modal-btn" class="modal-close-btn">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#eff6ff; border:1.5px solid #bfdbfe; border-radius:8px; padding:12px; margin-bottom:14px;">
+        <strong style="color:#1e40af;">💡 確実に書き込むための設定方法:</strong>
+        <p style="font-size: 0.86rem; color: #1e3a8a; margin-top:4px;">
+          Googleスプレッドシートの「拡張機能」➔「Apps Script」に下記のコードを貼り付け、<strong>アクセスできるユーザーを「全員」</strong>にしてデプロイしたURLを貼り付けてください。
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label for="gas-webhook-url">Google Apps Script (GAS) ウェブアプリURL:</label>
+        <input type="text" id="gas-webhook-url" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 12px; margin-bottom: 16px;">
+        <button type="button" id="save-gas-url-btn" class="submit-btn" style="padding: 10px 16px; font-size: 0.95rem;">💾 連携設定を保存</button>
+        <button type="button" id="test-gas-btn" class="retry-btn" style="padding: 10px 16px; background:#ecfdf5; border-color:#10b981; color:#065f46;">🧪 スプレッドシートへテスト送信</button>
+      </div>
+
+      <div id="gas-test-result" style="display:none; padding:12px; border-radius:6px; font-size:0.86rem; margin-bottom:14px;"></div>
+
+      <details class="gas-guide-details" open>
+        <summary>📖 【100%確実に書き込める】Apps Script コード（コピーして貼り付け）</summary>
+        <div class="gas-guide-content">
+          <ol style="padding-left: 20px; font-size: 0.85rem; line-height: 1.7; color: #334155;">
+            <li>スプレッドシートのメニュー「<strong>拡張機能</strong>」➔「<strong>Apps Script</strong>」を開きます。</li>
+            <li>エディタの内容をすべて消去し、以下のスクリプトを貼り付けて「<strong>保存（💾アイコン）</strong>」します：</li>
+          </ol>
+          <pre class="code-block"><code>function recordToSheet(params) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(["日時", "クラス", "出席番号", "氏名", "挑戦レベル", "分野", "問題ID", "問題タイトル", "文字数", "評価ランク", "生徒の論述解答"]);
+    sheet.getRange("A1:K1").setFontWeight("bold").setBackground("#e2e8f0");
+  }
+  sheet.appendRow([
+    params.timestamp || new Date().toLocaleString("ja-JP"),
+    params.className || "",
+    params.number || "",
+    params.name || "",
+    params.level || "",
+    params.field || "",
+    params.problemId || "",
+    params.problemTitle || "",
+    params.charCount || 0,
+    params.rank || "",
+    params.answer || ""
+  ]);
+}
+
+// GETリクエスト対応（最も確実・CORS制限ゼロ）
+function doGet(e) {
+  try {
+    var p = (e && e.parameter) ? e.parameter : {};
+    recordToSheet(p);
+    return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// POSTリクエスト対応
+function doPost(e) {
+  try {
+    var data = {};
+    if (e && e.postData && e.postData.contents) {
+      try { data = JSON.parse(e.postData.contents); } catch (err) { data = e.parameter || {}; }
+    } else if (e && e.parameter) {
+      data = e.parameter;
+    }
+    recordToSheet(data);
+    return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</code></pre>
+          <ol start="3" style="padding-left: 20px; font-size: 0.85rem; line-height: 1.7; color: #334155; margin-top: 8px;">
+            <li>右上の「<strong>デプロイ</strong>」➔「<strong>新しいデプロイ</strong>」をクリックします。</li>
+            <li>種類の選択（歯車アイコン）で「<strong>ウェブアプリ</strong>」を選択します。</li>
+            <li>説明: `社会科ログ`, 次のユーザーとして実行: 「<strong>自分</strong>」, アクセスできるユーザー: 「<strong>全員</strong>」を選択して「デプロイ」を押します。</li>
+            <li>表示された「<strong>ウェブアプリのURL</strong>」（末尾が <code>/exec</code> のもの）をコピーして、上の入力欄に貼り付けて保存してください！</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<script src="js/problems.js?v=20260829102934"></script>
+<script src="js/app.js?v=20260829102934"></script>
+</body>
+</html>
+
