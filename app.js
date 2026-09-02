@@ -8,17 +8,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const problemSelect = document.getElementById("problem-select");
   const problemTags = document.getElementById("problem-tags");
   const problemQuestion = document.getElementById("problem-question");
-  const problemHints = document.getElementById("problem-hints");
   const charGuide = document.getElementById("char-guide");
   const charCount = document.getElementById("char-count");
   const answerInput = document.getElementById("answer-input");
   const form = document.getElementById("essay-form");
   const submitBtn = document.getElementById("submit-btn");
 
+  // ヒントDOM
+  const toggleHintBtn = document.getElementById("toggle-hint-btn");
+  const hintBox = document.getElementById("hint-box");
+  const hintKeywords = document.getElementById("hint-keywords");
+  const hintTemplate = document.getElementById("hint-template");
+
+  // 模範解答DOM
   const toggleSampleBtn = document.getElementById("toggle-sample-btn");
   const sampleAnswerBox = document.getElementById("sample-answer-box");
   const sampleAnswerText = document.getElementById("sample-answer-text");
 
+  // 添削結果DOM
   const resultContainer = document.getElementById("result-container");
   const rankBox = document.getElementById("rank-box");
   const rankBadge = document.getElementById("rank-badge");
@@ -39,7 +46,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 模範解答トグル
+  // ヒント表示トグルイベント
+  if (toggleHintBtn) {
+    toggleHintBtn.addEventListener("click", () => {
+      if (hintBox.style.display === "none" || !hintBox.style.display) {
+        hintBox.style.display = "block";
+        toggleHintBtn.innerHTML = `<span>🙈 ヒントを閉じる</span>`;
+      } else {
+        hintBox.style.display = "none";
+        toggleHintBtn.innerHTML = `<span>🧩 書き方のヒントを見る（クリックで開く）</span>`;
+      }
+    });
+  }
+
+  // 模範解答トグルイベント
   if (toggleSampleBtn) {
     toggleSampleBtn.addEventListener("click", () => {
       if (sampleAnswerBox.style.display === "none" || !sampleAnswerBox.style.display) {
@@ -93,6 +113,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!currentProblem) return;
 
+    // ヒントボックスの初期化
+    if (hintBox) hintBox.style.display = "none";
+    if (toggleHintBtn) toggleHintBtn.innerHTML = `<span>🧩 書き方のヒントを見る（クリックで開く）</span>`;
+
+    if (currentProblem.keywords && currentProblem.keywords.length > 0) {
+      if (hintKeywords) {
+        hintKeywords.innerHTML = `<strong>💡 着眼点キーワードの例:</strong> ${currentProblem.keywords.join("、")}`;
+      }
+    } else {
+      if (hintKeywords) hintKeywords.innerHTML = "";
+    }
+
+    if (hintTemplate) {
+      hintTemplate.innerHTML = currentProblem.writingTemplate || "【書き方のステップ】\n① 問いに対する理由や背景をメモする。\n②「〜のため」「〜によって〇〇となる。」の形で文章をまとめましょう。";
+    }
+
+    // 模範解答ボックスの初期化
     if (sampleAnswerBox) sampleAnswerBox.style.display = "none";
     if (toggleSampleBtn) toggleSampleBtn.innerHTML = `<span>💡 模範解答例を見る</span>`;
     if (sampleAnswerText) sampleAnswerText.textContent = currentProblem.sampleAnswer || "模範解答準備中";
@@ -105,15 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (problemTags) problemTags.innerHTML = tagsHtml;
     if (problemQuestion) problemQuestion.textContent = currentProblem.question;
-
-    if (currentProblem.keywords && currentProblem.keywords.length > 0) {
-      if (problemHints) {
-        problemHints.innerHTML = `<strong>💡 着眼点キーワードの例:</strong> ${currentProblem.keywords.join("、")}`;
-        problemHints.style.display = "block";
-      }
-    } else {
-      if (problemHints) problemHints.style.display = "none";
-    }
 
     if (charGuide) charGuide.textContent = `目安: ${currentProblem.minChars}〜${currentProblem.maxChars}文字`;
   }
@@ -229,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
       rank = 'D';
       const sampleKw = missingKeywords.slice(0, 2).join('」や「');
       howToGetA = `【A判定にするための最短ナビ】\n① 【入れるキーワード】: 「${sampleKw || '理由'}」という言葉を使います。\n② 【文の組み立て】: 「〇〇によって、△△となるため。」と因果関係を作ります。\n③ 【完成目標】: 目安として${minTarget}文字以上のまとまった文章に仕上げましょう。`;
-      guidingQuestion = 'まずは思いつく理由を短く書き出してみませんか？';
+      guidingQuestion = 'まずは上の「書き方のヒント」を参考に、思いつく理由を短く書いてみませんか？';
     } else {
       rank = 'B';
       const nextKw = missingKeywords.length > 0 ? missingKeywords[0] : '具体的な影響や結果';
