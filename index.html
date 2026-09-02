@@ -1,788 +1,5 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>社会科 論述力向上トレーニング</title>
-  <style>
-    /* ==========================================================
-       🌟 超洗練・スタイリッシュ モダンエデュケーションUI
-       ========================================================== */
-    :root {
-      --primary: #3b82f6;
-      --primary-dark: #1d4ed8;
-      --primary-light: #eff6ff;
-      --accent: #10b981;
-      --accent-dark: #059669;
-      --bg: #f1f5f9;
-      --surface: #ffffff;
-      --text-main: #0f172a;
-      --text-sub: #475569;
-      --text-muted: #94a3b8;
-      --border: #e2e8f0;
-      --radius-xl: 20px;
-      --radius-lg: 14px;
-      --radius-md: 10px;
-      --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-      --shadow-hover: 0 20px 30px -10px rgba(15, 23, 42, 0.12);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", Meiryo, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      line-height: 1.7;
-      padding: 36px 16px 80px;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .container {
-      max-width: 840px;
-      margin: 0 auto;
-    }
-
-    /* 🎓 ヘッダー */
-    header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .header-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
-      color: #1e40af;
-      font-size: 0.82rem;
-      font-weight: 800;
-      padding: 6px 14px;
-      border-radius: 9999px;
-      margin-bottom: 12px;
-      letter-spacing: 0.03em;
-      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.15);
-    }
-
-    header h1 {
-      font-size: 2.1rem;
-      font-weight: 900;
-      color: #0f172a;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-
-    header p {
-      color: var(--text-sub);
-      font-size: 0.98rem;
-    }
-
-    /* 📦 カード */
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-card);
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      padding: 28px;
-      margin-bottom: 24px;
-      transition: all 0.25s ease;
-    }
-
-    .card:hover {
-      box-shadow: var(--shadow-hover);
-    }
-
-    .card-title {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .step-badge {
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      color: #ffffff;
-      font-size: 0.76rem;
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.25);
-    }
-
-    /* 📝 フォーム入力 */
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    .form-group:last-child {
-      margin-bottom: 0;
-    }
-
-    .form-group label {
-      display: block;
-      font-weight: 700;
-      font-size: 0.92rem;
-      margin-bottom: 8px;
-      color: #334155;
-    }
-
-    .required {
-      color: #ef4444;
-      margin-left: 2px;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    select,
-    textarea {
-      width: 100%;
-      padding: 13px 16px;
-      border: 1.8px solid #cbd5e1;
-      border-radius: var(--radius-lg);
-      font-size: 0.98rem;
-      background-color: #ffffff;
-      color: #0f172a;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #94a3b8;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      outline: none;
-      border-color: #2563eb;
-      background-color: #ffffff;
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
-    }
-
-    /* 🏷️ 分野選択タブ */
-    .field-tabs {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 14px 18px;
-      background: #f8fafc;
-      border: 1.8px solid #e2e8f0;
-      border-radius: var(--radius-lg);
-      font-weight: 800;
-      font-size: 1rem;
-      color: #475569;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .tab-btn:hover {
-      background: #f1f5f9;
-      color: #0f172a;
-      transform: translateY(-1px);
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      color: #ffffff;
-      border-color: #1d4ed8;
-      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
-      transform: translateY(-2px);
-    }
-
-    /* 📖 問題表示カード */
-    .problem-box {
-      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-      border: 1.8px solid #e2e8f0;
-      border-radius: var(--radius-lg);
-      padding: 22px;
-      margin-top: 14px;
-    }
-
-    .problem-tags {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      font-size: 0.8rem;
-      background: #ffffff;
-      color: #334155;
-      padding: 4px 12px;
-      border-radius: 9999px;
-      font-weight: 700;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    }
-
-    .problem-question {
-      font-size: 1.15rem;
-      font-weight: 800;
-      line-height: 1.7;
-      color: #0f172a;
-      margin-bottom: 16px;
-    }
-
-    .keywords-hint {
-      font-size: 0.9rem;
-      color: #0369a1;
-      background: #e0f2fe;
-      border: 1px solid #bae6fd;
-      padding: 12px 16px;
-      border-radius: var(--radius-md);
-      margin-bottom: 14px;
-      line-height: 1.6;
-    }
-
-    /* 💡 模範解答アコーディオン */
-    .toggle-sample-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 9px 16px;
-      background: #f0fdf4;
-      color: #15803d;
-      border: 1.5px solid #bbf7d0;
-      border-radius: var(--radius-md);
-      font-size: 0.88rem;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .toggle-sample-btn:hover {
-      background: #dcfce7;
-      transform: translateY(-1px);
-    }
-
-    .sample-answer-box {
-      background: #f0fdf4;
-      border: 1.8px solid #86efac;
-      border-radius: var(--radius-lg);
-      padding: 16px;
-      margin-top: 12px;
-      animation: fadeIn 0.25s ease-out;
-    }
-
-    .sample-answer-header {
-      font-weight: 800;
-      color: #166534;
-      font-size: 0.95rem;
-      margin-bottom: 8px;
-    }
-
-    .sample-answer-content {
-      font-size: 0.96rem;
-      color: #14532d;
-      line-height: 1.7;
-      background: #ffffff;
-      padding: 14px 16px;
-      border-radius: var(--radius-md);
-      border: 1px solid #bbf7d0;
-    }
-
-    /* 🧮 文字数カウンター */
-    .char-counter-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.9rem;
-      color: #64748b;
-      margin-top: 10px;
-      font-weight: 700;
-    }
-
-    /* 🚀 送信ボタン */
-    .submit-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      color: #ffffff;
-      border: none;
-      border-radius: var(--radius-lg);
-      font-size: 1.15rem;
-      font-weight: 900;
-      cursor: pointer;
-      letter-spacing: 0.03em;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
-      margin-top: 8px;
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45);
-    }
-
-    .submit-btn:active {
-      transform: translateY(0);
-    }
-
-    /* 🏆 添削結果 */
-    #result-container {
-      display: none;
-      border: 2px solid #3b82f6;
-      animation: slideUp 0.35s ease-out;
-    }
-
-    .rank-header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 20px;
-      border-radius: var(--radius-lg);
-      margin-bottom: 22px;
-    }
-
-    .rank-A-box { background: #ecfdf5; border: 1.8px solid #a7f3d0; }
-    .rank-B-box { background: #eff6ff; border: 1.8px solid #bfdbfe; }
-    .rank-C-box { background: #fffbeb; border: 1.8px solid #fde68a; }
-    .rank-D-box { background: #fef2f2; border: 1.8px solid #fecaca; }
-
-    .rank-badge {
-      font-size: 2.6rem;
-      font-weight: 900;
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-    }
-
-    .rank-A-badge { background: #10b981; }
-    .rank-B-badge { background: #3b82f6; }
-    .rank-C-badge { background: #f59e0b; }
-    .rank-D-badge { background: #ef4444; }
-
-    .rank-title {
-      font-size: 1.35rem;
-      font-weight: 900;
-      color: #0f172a;
-    }
-
-    .rank-subtitle {
-      font-size: 0.85rem;
-      color: #64748b;
-      margin-top: 3px;
-    }
-
-    /* フィードバックカード */
-    .feedback-section {
-      background: #f8fafc;
-      border: 1.5px solid #e2e8f0;
-      border-radius: var(--radius-lg);
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-
-    .fb-heading {
-      font-weight: 800;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .fb-good { color: #059669; }
-    .fb-improve { color: #d97706; }
-    .fb-question { color: #4f46e5; }
-
-    .fb-body {
-      font-size: 0.96rem;
-      line-height: 1.75;
-      color: #1e293b;
-      white-space: pre-line;
-    }
-
-    .retry-action {
-      text-align: center;
-      margin-top: 24px;
-    }
-
-    .retry-btn {
-      padding: 14px 32px;
-      background: #ffffff;
-      border: 2px solid #2563eb;
-      border-radius: var(--radius-lg);
-      color: #2563eb;
-      font-size: 1rem;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.2s;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
-    }
-
-    .retry-btn:hover {
-      background: #2563eb;
-      color: #ffffff;
-      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
-      transform: translateY(-2px);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-</head>
-<body>
-
-<div class="container">
-  <header>
-    <div class="header-badge">✨ 学習指導要領準拠・全問模範解答付き</div>
-    <h1>社会科 論述力向上トレーニング</h1>
-    <p>問いに対する多面的な視点と論理的な記述力を育てるAI添削システム</p>
-  </header>
-
-  <form id="essay-form">
-    <!-- STEP 1: 生徒情報 -->
-    <div class="card">
-      <div class="card-title">
-        <span class="step-badge">STEP 1</span> 生徒情報を入力
-      </div>
-      <div class="grid-3">
-        <div class="form-group">
-          <label for="student-class">クラス <span class="required">*</span></label>
-          <select id="student-class" required>
-            <option value="">選択してください</option>
-            <option value="1組">1組</option>
-            <option value="2組">2組</option>
-            <option value="3組">3組</option>
-            <option value="4組">4組</option>
-            <option value="5組">5組</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="student-num">出席番号 <span class="required">*</span></label>
-          <input type="number" id="student-num" min="1" max="50" placeholder="例: 12" required>
-        </div>
-        <div class="form-group">
-          <label for="student-name">氏名 <span class="required">*</span></label>
-          <input type="text" id="student-name" placeholder="例: 青山 翔" required>
-        </div>
-      </div>
-    </div>
-
-    <!-- STEP 2: 分野と問題を選択 -->
-    <div class="card">
-      <div class="card-title">
-        <span class="step-badge">STEP 2</span> 分野と問題を選択
-      </div>
-
-      <!-- 分野タブ -->
-      <div class="field-tabs">
-        <button type="button" class="tab-btn" data-field="geography">🌏 地理的分野</button>
-        <button type="button" class="tab-btn active" data-field="history">📜 歴史的分野</button>
-        <button type="button" class="tab-btn" data-field="civics">🏛️ 公民的分野</button>
-      </div>
-
-      <div class="form-group">
-        <label for="problem-select">演習問題を選択（時代・単元順）</label>
-        <select id="problem-select"></select>
-      </div>
-
-      <!-- 選択された問題の表示 -->
-      <div id="problem-card" class="problem-box">
-        <div class="problem-tags" id="problem-tags"></div>
-        <div class="problem-question" id="problem-question"></div>
-        <div class="keywords-hint" id="problem-hints"></div>
-        
-        <!-- 模範解答アコーディオン -->
-        <div class="sample-answer-wrapper">
-          <button type="button" id="toggle-sample-btn" class="toggle-sample-btn">
-            <span>💡 模範解答例を見る</span>
-          </button>
-          <div id="sample-answer-box" class="sample-answer-box" style="display: none;">
-            <div class="sample-answer-header">📖 模範解答例</div>
-            <div id="sample-answer-text" class="sample-answer-content"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- STEP 3: 論述記述 -->
-    <div class="card">
-      <div class="card-title">
-        <span class="step-badge">STEP 3</span> あなたの論述を記述
-      </div>
-
-      <div class="form-group">
-        <label for="answer-input">解答入力欄 <span class="required">*</span></label>
-        <textarea id="answer-input" rows="6" placeholder="問いに対する理由や背景、多面的な視点を意識して自分の言葉でまとめましょう..." required></textarea>
-        <div class="char-counter-bar">
-          <span id="char-guide">目安: 70〜160文字</span>
-          <span>現在の文字数: <strong id="char-count">0</strong> 文字</span>
-        </div>
-      </div>
-
-      <button type="submit" id="submit-btn" class="submit-btn">
-        <span>✨ AI添削を受ける ＆ 提出する</span>
-      </button>
-    </div>
-  </form>
-
-  <!-- 添削結果カード -->
-  <div id="result-container" class="card">
-    <div class="card-title">
-      <span class="step-badge">RESULT</span> 添削・推敲フィードバック
-    </div>
-
-    <!-- ランクヘッダー -->
-    <div id="rank-box" class="rank-header">
-      <div id="rank-badge" class="rank-badge">A</div>
-      <div>
-        <div id="rank-title" class="rank-title">評価結果</div>
-        <div id="rank-engine" class="rank-subtitle"></div>
-      </div>
-    </div>
-
-    <!-- 良かった点 -->
-    <div class="feedback-section">
-      <div class="fb-heading fb-good">
-        <span>👍</span> 良かった点（捉えられている視点）
-      </div>
-      <div id="fb-good-text" class="fb-body"></div>
-    </div>
-
-    <!-- A判定にするためのアドバイス -->
-    <div class="feedback-section">
-      <div class="fb-heading fb-improve">
-        <span>💡</span> A判定にするためのアドバイス（推敲のポイント）
-      </div>
-      <div id="fb-advice-text" class="fb-body"></div>
-    </div>
-
-    <!-- 問いかけ -->
-    <div class="feedback-section">
-      <div class="fb-heading fb-question">
-        <span>❓</span> 自力で考えを深める推敲の問いかけ
-      </div>
-      <div id="fb-question-text" class="fb-body"></div>
-    </div>
-
-    <div class="retry-action">
-      <button type="button" id="rewrite-btn" class="retry-btn">📝 このフィードバックをもとに再推敲（書き直す）</button>
-    </div>
-  </div>
-</div>
-
-<script>
-/**
- * 社会科 論述問題マスターデータ
- * - 中学校入試レベル (各5問・計15問)
- * - 高校入試・中学3年レベル (地理33問・歴史60問・公民43問：計136問)
- *   第一次世界大戦以降の現代史（大戦景気、米騒動、国際連盟、ワシントン体制、全国水平社、新婦人協会、三・一独立運動、五四運動、世界恐慌、昭和恐慌、満州事変、日中戦争、国家総動員法、日独伊三国同盟、太平洋戦争、戦後改革、日本国憲法、冷戦、サンフランシスコ講和、高度経済成長、国交正常化、石油危機、PKO協力法等）を大量拡充！
- * - 大学入試レベル (各3問・計9問)
- * 総問題数: 160問
- */
 
 const PROBLEM_DATA = {
-  junior_high: {
-    geography: [
-  {
-    "id": "jh_geo_01",
-    "category": "日本の国土と自然",
-    "title": "日本の気候の地域差（日本海側と太平洋側）",
-    "tags": ["日本の気候", "季節風", "降雪"],
-    "minChars": 40, "maxChars": 100,
-    "question": "冬に日本海側の地域で雪や雨が多くなる理由を、季節風と山脈に着目して説明しなさい。",
-    "keywords": ["北西の季節風", "日本海で水蒸気を含む", "越後山脈/山脈にぶつかる"],
-    "sampleAnswer": "冬にシベリアから吹く冷たい北西の季節風が、日本海を渡る際に水蒸気を多く含み、中央の山脈にぶつかって上昇することで、日本海側に大雪を降らせるため。",
-    "writingTemplate": "【書き方のステップ】\n①冬に吹く風（北西の季節風）と水蒸気の吸収を書く。\n②山脈にぶつかって上昇し、雪を降らせる流れを「〜ため。」で結ぶ。"
-  },
-  {
-    "id": "jh_geo_02",
-    "category": "産業と人々のくらし",
-    "title": "近郊農業の特色と利点",
-    "tags": ["農業", "近郊農業", "大消費地"],
-    "minChars": 40, "maxChars": 100,
-    "question": "大都市の周辺で行われる「近郊農業」の利点を、輸送時間や鮮度に着目して説明しなさい。",
-    "keywords": ["大消費地に近い", "輸送費・輸送時間が抑えられる", "新鮮な野菜/鮮度"],
-    "sampleAnswer": "大都市という大きな消費地の近くで栽培するため、輸送時間や輸送費用を抑えることができ、新鮮な野菜をすぐに消費者に届けることができる利点がある。",
-    "writingTemplate": "【書き方のステップ】\n①大都市に近いという立地の特徴を書く。\n②輸送コストの削減や新鮮なまま届けられる利点を書く。"
-  },
-  {
-    "id": "jh_geo_03",
-    "category": "産業と人々のくらし",
-    "title": "促成栽培と抑制栽培の工夫",
-    "tags": ["農業", "促成栽培", "出荷時期"],
-    "minChars": 40, "maxChars": 100,
-    "question": "温暖な気候を利用して出荷時期を早める「促成栽培」を行う利点を、価格の観点から説明しなさい。",
-    "keywords": ["出荷時期を早める", "他の産地が出回っていない時期", "高い価格で売れる"],
-    "sampleAnswer": "他の主要な産地からの出荷が少ない時期に収穫して市場に出すことができるため、需要が高く通常よりも高い価格で販売できる利点がある。",
-    "writingTemplate": "【書き方のステップ】\n①出荷時期を早める工夫を書く。\n②品薄な時期に出すことで高く売れる理由をまとめる。"
-  },
-  {
-    "id": "jh_geo_04",
-    "category": "日本の国土と自然",
-    "title": "扇状地における土地利用の工夫",
-    "tags": ["地形", "扇状地", "水はけ"],
-    "minChars": 40, "maxChars": 100,
-    "question": "扇状地の傾斜地（扇頂や扇央）で水田ではなく果樹園が多く見られる理由を、水はけに着目して説明しなさい。",
-    "keywords": ["砂利や小石が多い", "水はけが良すぎる/水が地下にしみ込む", "果樹栽培に適している"],
-    "sampleAnswer": "川が山から平野に出る場所にできた扇状地は砂利や小石が多く水はけが良すぎるため、水をためる水田には向かず、果樹栽培に適しているから。",
-    "writingTemplate": "【書き方のステップ】\n①土壌の特徴（砂利・水はけの良さ）を書く。\n②水田に向かず果樹園になる理由を結ぶ。"
-  },
-  {
-    "id": "jh_geo_05",
-    "category": "環境と社会",
-    "title": "過疎化が進む地域の課題",
-    "tags": ["人口問題", "過疎地域", "地域社会"],
-    "minChars": 40, "maxChars": 100,
-    "question": "農山村地域で若者が都市へ流出し過疎化が進むと、地域社会の維持にどのような問題が生じるか説明しなさい。",
-    "keywords": ["高齢化が進む", "伝統行事や防災活動の維持が困難", "医療や交通の不便"],
-    "sampleAnswer": "若者の流出により高齢化が進むことで、森林の管理や防災・伝統行事の維持が困難になり、商店や交通機関・医療の撤退で生活が不便になる問題が生じる。",
-    "writingTemplate": "【書き方のステップ】\n①高齢化が進む状況を書く。\n②地域の維持（防災・生活機能）が困難になる影響を書く。"
-  }
-],
-    history: [
-  {
-    "id": "jh_hist_01",
-    "category": "古代国家の歩み",
-    "title": "聖徳太子の政治の目的",
-    "tags": ["飛鳥時代", "聖徳太子", "天皇中心"],
-    "minChars": 40, "maxChars": 100,
-    "question": "聖徳太子が「冠位十二階」や「十七条の憲法」を定めた目的を、豪族の力に着目して説明しなさい。",
-    "keywords": ["家柄にとらわれない人材登用", "豪族の争いを防ぐ/官吏の心得", "天皇を中心とする国づくり"],
-    "sampleAnswer": "家柄にとらわれず能力のある人材を登用し、豪族同士の争いを抑えて役人の規律を正すことで、天皇を中心とする中央集権的な国づくりを進めるため。",
-    "writingTemplate": "【書き方のステップ】\n①官吏の登用や規律の制定を書く。\n②天皇中心の国を目指した目的を結ぶ。"
-  },
-  {
-    "id": "jh_hist_02",
-    "category": "武士の台頭と中世",
-    "title": "御家人と将軍の主従関係（御恩と奉公）",
-    "tags": ["鎌倉時代", "御恩と奉公", "封建制度"],
-    "minChars": 40, "maxChars": 100,
-    "question": "鎌倉幕府の将軍と御家人を結びつけた「御恩と奉公」の関係について具体的に説明しなさい。",
-    "keywords": ["将軍が領地を保護・給与(御恩)", "御家人が軍役や京都大番役(奉公)", "土地を通じた主従関係"],
-    "sampleAnswer": "将軍が御家人に対して先祖伝来の土地の支配を認め新たな領地を与える「御恩」に対し、御家人は戦時に命がけで戦い警備を務める「奉公」で応じる関係。",
-    "writingTemplate": "【書き方のステップ】\n①将軍からの「御恩（土地の保障）」を書く。\n②御家人からの「奉公（軍役）」を対応させてまとめる。"
-  },
-  {
-    "id": "jh_hist_03",
-    "category": "近世の日本",
-    "title": "江戸幕府が参勤交代を命じたねらい",
-    "tags": ["江戸時代", "参勤交代", "大名統制"],
-    "minChars": 40, "maxChars": 100,
-    "question": "江戸幕府が大名に対して1年おきに江戸と領地を往復する「参勤交代」を義務づけたねらいを説明しなさい。",
-    "keywords": ["大名に多額の費用を使わせる/財政を圧迫", "軍事力を弱める", "幕府への反乱を防ぐ"],
-    "sampleAnswer": "大名に江戸と領地の往復や江戸での滞在に多額の費用を使わせて経済力を削ぐことで、幕府に対して反乱を起こす力を奪い統制を強めるため。",
-    "writingTemplate": "【書き方のステップ】\n①多額の出費を強いる仕組みを書く。\n②反乱を防ぎ幕府の支配を強める目的を結ぶ。"
-  },
-  {
-    "id": "jh_hist_04",
-    "category": "近代国家への歩み",
-    "title": "明治政府が「富国強兵」を進めた理由",
-    "tags": ["明治維新", "富国強兵", "不平等条約"],
-    "minChars": 40, "maxChars": 100,
-    "question": "明治政府が欧米の近代的な産業や軍隊を積極的に導入して「富国強兵」を進めた背景を説明しなさい。",
-    "keywords": ["欧米列強の植民地化を防ぐ", "日本の独立を守る", "不平等条約を改正する"],
-    "sampleAnswer": "欧米列強によるアジアの植民地化の危機に対抗して日本の独立を守り、結ばれていた不平等条約を改正するために国力を高める必要があったから。",
-    "writingTemplate": "【書き方のステップ】\n①欧米列強への対抗（独立維持）を書く。\n②条約改正と近代化の必要性を結ぶ。"
-  },
-  {
-    "id": "jh_hist_05",
-    "category": "近代国家への歩み",
-    "title": "地租改正に反対する一揆が起きた理由",
-    "tags": ["明治時代", "地租改正", "農民一揆"],
-    "minChars": 40, "maxChars": 100,
-    "question": "明治政府の地租改正に対して、各地で農民による激しい反対一揆が起きた理由を負担の観点から説明しなさい。",
-    "keywords": ["地価の3％を現金納付", "豊凶にかかわらず一定額", "従来の年貢と変わらない重い負担"],
-    "sampleAnswer": "税が米から地価の3％の現金納付に変わったものの、豊作・凶作に関係なく一定額を納めねばならず、農民の負担が従来の年貢と変わらず重かったから。",
-    "writingTemplate": "【書き方のステップ】\n①地価の3%を現金納付する制度を書く。\n②農民の実質負担が軽減されず重かった理由を結ぶ。"
-  }
-],
-    civics: [
-  {
-    "id": "jh_civ_01",
-    "category": "日本国憲法と人権",
-    "title": "日本国憲法の三大原則",
-    "tags": ["日本国憲法", "三大原則", "民主主義"],
-    "minChars": 40, "maxChars": 100,
-    "question": "日本国憲法が掲げる「三大原則」をすべて挙げ、そのうち「国民主権」の意味を説明しなさい。",
-    "keywords": ["国民主権・基本的人権の尊重・平和主義", "国の政治を決定する最終的な権力(主権)が国民にある"],
-    "sampleAnswer": "三大原則は国民主権・基本的人権の尊重・平和主義である。国民主権とは、国の政治のあり方を最終的に決定する権力が国民にあるという原則である。",
-    "writingTemplate": "【書き方のステップ】\n①三大原則の3つの名称を正確に書く。\n②「国民主権」の意味（決定権が国民にあること）を説明する。"
-  },
-  {
-    "id": "jh_civ_02",
-    "category": "現代の民主政治",
-    "title": "三権分立の仕組みと目的",
-    "tags": ["三権分立", "抑制と均衡", "権力の濫用防止"],
-    "minChars": 40, "maxChars": 100,
-    "question": "国の権力を立法・行政・司法の三権に分け、互いに抑制と均衡を保たせている目的を説明しなさい。",
-    "keywords": ["権力の集中を防ぐ", "権力の濫用を防止する", "国民の権利・自由を守る"],
-    "sampleAnswer": "ひとつの機関に権力が集中して濫用されるのを防ぎ、互いにブレーキをかけ合わせることで、国民の自由と権利を確実に守るため。",
-    "writingTemplate": "【書き方のステップ】\n①権力の集中・濫用を防ぐ目的を書く。\n②国民の基本的人権を守る結論を結ぶ。"
-  },
-  {
-    "id": "jh_civ_03",
-    "category": "市場経済と暮らし",
-    "title": "需要と供給による価格の決まり方",
-    "tags": ["市場経済", "価格の決定", "需要と供給"],
-    "minChars": 40, "maxChars": 100,
-    "question": "ある商品の需要（買いたい量）が供給（売りたい量）を上回ったとき、価格はどのように変化するか理由とともに説明しなさい。",
-    "keywords": ["買いたい人が多い/品不足", "高くても買いたい人が現れる", "価格は上昇する"],
-    "sampleAnswer": "買いたい量が売りたい量より多いと品不足の状態になり、高くても手に入れたいと考える人が増えるため、価格は上昇する。",
-    "writingTemplate": "【書き方のステップ】\n①需要超過（品不足）の状態を書く。\n②価格が上昇するメカニズムを結論付ける。"
-  },
-  {
-    "id": "jh_civ_04",
-    "category": "地方自治と私たち",
-    "title": "地方自治が「民主主義の学校」と呼ばれる理由",
-    "tags": ["地方自治", "住民自治", "政治参加"],
-    "minChars": 40, "maxChars": 100,
-    "question": "地方自治が身近な民主主義の練習の場として「民主主義の学校」と呼ばれる理由を説明しなさい。",
-    "keywords": ["身近な地域の課題", "住民自らが話し合い参加する", "民主政治の基本や仕組みを学ぶ"],
-    "sampleAnswer": "身近な地域の課題について住民自らが話し合い、意思決定に参加・体験することを通して、民主主義の精神や政治の仕組みを学ぶことができるから。",
-    "writingTemplate": "【書き方のステップ】\n①身近な問題に住民が直接参加する点を書く。\n②政治を実践的に学ぶ場である理由を結ぶ。"
-  },
-  {
-    "id": "jh_civ_05",
-    "category": "国際社会と地球環境",
-    "title": "地球温暖化を防ぐための身近な取り組み",
-    "tags": ["地球環境", "二酸化炭素", "省エネルギー"],
-    "minChars": 40, "maxChars": 100,
-    "question": "二酸化炭素などの温室効果ガス排出を抑えるために、私たちが日常生活で実践できる工夫を説明しなさい。",
-    "keywords": ["節電・省エネルギー", "公共交通機関や自転車の利用", "食品ロスやゴミの削減"],
-    "sampleAnswer": "エアコンの温度設定の調節やこまめな消灯で節電し、自家用車ではなく自転車や公共交通機関を利用して化石燃料の消費を抑える工夫ができる。",
-    "writingTemplate": "【書き方のステップ】\n①家庭での節電工夫を挙げる。\n②移動やゴミ削減によるCO2削減を結ぶ。"
-  }
-]
-  },
   high_school: {
     geography: [
     {
@@ -3767,148 +2984,29 @@ const PROBLEM_DATA = {
     }
 ]
 
-  },
-  university: {
-    geography: [
-  {
-    "id": "univ_geo_01",
-    "category": "地球的課題と地誌",
-    "title": "グローバルサウスの台頭と多極化する世界地誌",
-    "tags": ["グローバルサウス", "多極化", "国際秩序"],
-    "minChars": 120, "maxChars": 250,
-    "question": "冷戦終結後の単極支配から、新興国（グローバルサウス）の台頭によって多極化が進む現代世界において、資源・人口・地政学の3つの観点からその構造変化を論述しなさい。",
-    "keywords": ["新興国・途上国の経済成長と資源保有", "人口ボーナスと巨大消費市場", "地政学的な非同盟・独自の外交戦略"],
-    "sampleAnswer": "新興国は豊富な鉱物・エネルギー資源を背景に交渉力を強め、旺盛な人口増加に伴う労働力と巨大市場（人口ボーナス）を獲得して世界経済の中心へと移行している。また、米中対立の中で特定の陣営に属さない戦略的外交を展開しており、従来の先進国主導の国際秩序は再編され多極的な地政学構造へと変化している。",
-    "writingTemplate": "【書き方のステップ】\n①資源面での優位性と交渉力の強化を論じる。\n②人口ボーナスと市場規模の拡大を述べる。\n③外交・地政学的な多極化の進展を結ぶ。"
-  },
-  {
-    "id": "univ_geo_02",
-    "category": "現代の都市構造",
-    "title": "インナーシティ問題とジェントリフィケーションの光と影",
-    "tags": ["都市地理学", "ジェントリフィケーション", "地域格差"],
-    "minChars": 120, "maxChars": 250,
-    "question": "先進国の大都市中心部におけるインナーシティの衰退と、その後の再開発（ジェントリフィケーション）がもたらす都市機能の再生と社会的分断について論述しなさい。",
-    "keywords": ["産業構造転換と都心部の空洞化・スラム化", "富裕層の流入と地価・家賃の高騰", "低所得層の立ち退き・コミュニティの分断"],
-    "sampleAnswer": "郊外化と産業転換により都心部で空洞化や治安悪化（インナーシティ問題）が生じた後、再開発や住環境の整備によって高所得層が流入するジェントリフィケーションが進んだ。これにより都市の税収増加や美観改善という恩恵がある一方、地価や家賃の高騰に伴い従前の低所得住民が立ち退きを迫られ、都市内の社会的分断が深刻化している。",
-    "writingTemplate": "【書き方のステップ】\n①インナーシティ問題の発生背景を簡潔に書く。\n②ジェントリフィケーションによる都市機能の再生効果を書く。\n③地価高騰に伴う低所得層の排除・分断という課題を論じる。"
-  },
-  {
-    "id": "univ_geo_03",
-    "category": "環境と持続可能性",
-    "title": "水資源クライシスと仮想水（バーチャルウォーター）貿易",
-    "tags": ["水資源", "仮想水", "食料安全保障"],
-    "minChars": 120, "maxChars": 250,
-    "question": "地球規模で深刻化する水資源不足に対し、食料の国際貿易を通じて移動する「仮想水（バーチャルウォーター）」の概念を説明し、輸入国と輸出国双方の課題を論述しなさい。",
-    "keywords": ["農畜産物の生産に不可欠な膨大な水消費", "輸入国における水資源負荷の外部化と食料依存", "輸出国における地下水枯渇や塩類集積"],
-    "sampleAnswer": "仮想水とは、農畜産物の生産に消費された水を推計し貿易に伴って間接的に移動すると捉える概念である。日本などの輸入国は自国の水消費を海外に肩代わりさせることで水資源負荷を外部化しているが、輸出国では過剰な灌漑による地下水枯渇や土壌の塩類集積が生じている。さらに、気候変動による輸出国の干ばつが輸入国の食料安全保障を直撃する相互依存リスクを抱えている。",
-    "writingTemplate": "【書き方のステップ】\n①仮想水の定義を明確に説明する。\n②輸出国側で生じる環境問題（地下水枯渇など）を指摘する。\n③輸入国側の食料安全保障上の課題を結ぶ。"
-  }
-],
-    history: [
-  {
-    "id": "univ_hist_01",
-    "category": "古代・中世の権力構造",
-    "title": "荘園公領制の成立と中世社会の重層的支配",
-    "tags": ["中世史", "荘園公領制", "職の体系"],
-    "minChars": 120, "maxChars": 250,
-    "question": "古代律令国家の崩壊から院政期にかけて成立した「荘園公領制」と「職（しき）の体系」について、土地支配の重層性と在地領主（武士）の台頭に着目して論述しなさい。",
-    "keywords": ["律令制の公地公民の崩壊と名体制の展開", "本家・領家・預所・下司などの重層的な権利関係(職)", "在地武士の開発領主としての成長と幕府成立"],
-    "sampleAnswer": "律令制の崩壊後、有力農民が開発した土地を貴族や寺社へ寄進して成立した荘園と、国司が管轄する公領が併存する荘園公領制が形成された。土地には本家・領家・現地を管理する預所や下司などがそれぞれ得分（収益権）を持つ「職の体系」という重層的な権利関係が成立し、現地で実質的な支配力を強めた開発領主（武士）が後に鎌倉幕府を開く権力基盤となった。",
-    "writingTemplate": "【書き方のステップ】\n①律令制の崩壊から荘園・公領の成立過程を書く。\n②重層的な「職の体系」の構造を説明する。\n③在地武士の台頭と中世武家政権への連動を論じる。"
-  },
-  {
-    "id": "univ_hist_02",
-    "category": "近世・近代の外交と開国",
-    "title": "幕末の開国と金銀比価問題による経済的混乱",
-    "tags": ["幕末", "日米修好通商条約", "金銀比価"],
-    "minChars": 120, "maxChars": 250,
-    "question": "日米修好通商条約に基づく自由貿易の開始後、日本と外国との金銀交換比率の違いが国内経済にどのような大混乱を引き起こし、幕府の権威失墜と倒幕運動につながったか論述しなさい。",
-    "keywords": ["日本の金銀比価(1:5)と国際水準(1:15)の格差", "大量の小判(金貨)の海外流出と万延貨幣改鋳", "激しいインフレーション(物価高騰)と民衆の世直し一揆"],
-    "sampleAnswer": "日本国内の金銀比価（1対5）が国際水準（1対15）に比べて金が割安であったため、外国商人が銀貨を持ち込んで小判に両替し海外へ持ち出す金の大量流出が発生した。幕府は金の含有量を大幅に減らした万延小判を鋳造して流出を食い止めようとしたが、急激なインフレーションを招いて民衆生活を直撃し、政情不安と討幕派の勢力拡大を決定づけた。",
-    "writingTemplate": "【書き方のステップ】\n①内外の金銀比価格差と金の流出メカニズムを書く。\n②幕府の改鋳対策とインフレの発生を述べる。\n③社会不安が倒幕運動を加速させた帰結を結ぶ。"
-  },
-  {
-    "id": "univ_hist_03",
-    "category": "現代の世界秩序と日本",
-    "title": "サンフランシスコ平和条約と日米安全保障条約体制の形成",
-    "tags": ["戦後史", "サンフランシスコ講和", "日米安保条約"],
-    "minChars": 120, "maxChars": 250,
-    "question": "冷戦の激化の中で締結されたサンフランシスコ平和条約（単独講和）と旧日米安全保障条約が、戦後日本の国際社会復帰と安全保障構造に与えた歴史的意義と課題を論述しなさい。",
-    "keywords": ["冷戦構造の固定化とソ連・中国を除く多数講和", "主権回復と同時に米軍駐留・基地提供を承認", "基地問題(沖縄など)と憲法第9条との緊張関係"],
-    "sampleAnswer": "朝鮮戦争の勃発など冷戦激化を背景に、日本は共産圏を除く西側陣営中心の多数講和によって主権を回復し国際社会への復帰を果たした。しかし同日調印された旧日米安保条約により米軍の継続駐留と基地提供が義務付けられ、日本は西側陣営の安全保障体制に組み込まれることとなった。これにより平和憲法との整合性や沖縄に集中する米軍基地問題が戦後日本の根幹の課題となった。",
-    "writingTemplate": "【書き方のステップ】\n①冷戦背景と単独講和による主権回復を説明する。\n②日米安保条約の締結と西側陣営への組み込みを述べる。\n③基地問題や憲法上の課題という長期的な影響を論じる。"
-  }
-],
-    civics: [
-  {
-    "id": "univ_civ_01",
-    "category": "憲法学・統治機構論",
-    "title": "違憲審査権の性格（付随的違憲審査制）と司法の限界",
-    "tags": ["憲法学", "違憲審査制", "統治行為論"],
-    "minChars": 120, "maxChars": 250,
-    "question": "日本国憲法における裁判所の違憲立法審査権について、アメリカ型の「付随的違憲審査制」の特徴を説明し、裁判所が高度な政治的判断を避ける「司法消極主義（統治行為論）」の功罪を論述しなさい。",
-    "keywords": ["具体的な具体的な事件・争訟を前提とする審査(付随的審査)", "憲法の番人としての基本的人権の保障", "統治行為論や立法裁量論による司法判断の回避と民主主義"],
-    "sampleAnswer": "日本の違憲審査制は、具体的な事件・訴訟の解決に必要な限度で法令の合憲性を判断する付随的違憲審査制を採用している。裁判所は「憲法の番人」として多数派による人権侵害を抑制する役割を持つが、安保法制や衆議院解散などの高度な政治問題に対しては統治行為論を用いて判断を回避する傾向（司法消極主義）がある。これは民主主義の尊重という側面がある反面、憲法保障機能を形骸化させる批判もある。",
-    "writingTemplate": "【書き方のステップ】\n①付随的違憲審査制の定義と特質を述べる。\n②司法消極主義・統治行為論の具体例を挙げる。\n③人権保障と民主的統制のバランスを批評する。"
-  },
-  {
-    "id": "univ_civ_02",
-    "category": "財政金融政策論",
-    "title": "財政の持続可能性と非伝統的金融政策の出口戦略",
-    "tags": ["マクロ経済学", "異次元緩和", "財政規律"],
-    "minChars": 120, "maxChars": 250,
-    "question": "長期にわたるデフレ脱却を目指して実施された日本銀行の「異次元の金融緩和」のメカニズムと効果を説明し、国債膨張に伴う財政健全化および金利正常化（出口戦略）におけるジレンマを論述しなさい。",
-    "keywords": ["マイナス金利・長短金利操作(YCC)と国債大量買い入れ", "円安進行と物価上昇・家計実質賃金の圧迫", "金利上昇に伴う国債利払い費の増大と財政リスク"],
-    "sampleAnswer": "日銀はマイナス金利や国債の大量買い入れ（長短金利操作）を行い、市場への資金供給と超低金利環境を通じて投資や消費の刺激を図った。しかし、長期化により市場機能の低下や過度な円安による物価高がもたらされた。金利正常化へ舵を切る際には、莫大に膨らんだ国債の利払い費が急増して国の財政を圧迫するリスクがあり、物価安定と財政持続性の間で極めて困難な舵取りを迫られている。",
-    "writingTemplate": "【書き方のステップ】\n①異次元緩和の枠組みと意図した効果を書く。\n②副作用（円安、市場機能低下）を指摘する。\n③出口戦略における利払い費急増のジレンマを論述する。"
-  },
-  {
-    "id": "univ_civ_03",
-    "category": "国際政治経済学",
-    "title": "グローバリゼーションの変容と経済安全保障",
-    "tags": ["国際政治経済", "経済安全保障", "サプライチェーン"],
-    "minChars": 120, "maxChars": 250,
-    "question": "自由貿易と国際分業を軸とする従来のグローバリゼーションに対し、米中覇権争いや地政学リスクの高まりが「経済安全保障」を重視するサプライチェーン再構築へと舵を切らせている背景と課題を論述しなさい。",
-    "keywords": ["効率性重視のサプライチェーンから強靱性(レジリエンス)重視へ", "戦略物資(半導体・重要鉱物)のデリスキング・フレンドショアリング", "保護主義の台頭による世界経済の分断とコスト増"],
-    "sampleAnswer": "従来のグローバリゼーションは効率性を最優先し、低コスト地域への生産移転と国際分業を推進してきた。しかし米中対立や感染症、戦争による供給途絶を契機に、半導体や重要鉱物などの戦略物資を特定国に依存する脆弱性が露呈した。各国は同盟国間でのサプライチェーン再構築（フレンドショアリング）を進めているが、これは過度な保護主義やブロック化を招き、生産コストの増大と世界経済の分断を加速させる課題を抱えている。",
-    "writingTemplate": "【書き方のステップ】\n①効率重視のグローバリゼーションの特質を書く。\n②サプライチェーンの脆弱性と経済安保の台頭を論じる。\n③ブロック化・コスト増という世界的課題を総括する。"
-  }
-]
   }
 };
 
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = PROBLEM_DATA;
-}
-
-</script>
-
-<script>
 document.addEventListener("DOMContentLoaded", () => {
-  let currentLevel = "high_school"; // "junior_high" | "high_school" | "university"
-  let currentField = "history";     // デフォルトを歴史に
+  const currentLevel = "high_school";
+  let currentField = "history";
   let currentProblem = null;
 
-  // DOM要素
-  const levelBtns = document.querySelectorAll(".level-tab-btn");
   const tabBtns = document.querySelectorAll(".tab-btn");
   const problemSelect = document.getElementById("problem-select");
   const problemTags = document.getElementById("problem-tags");
   const problemQuestion = document.getElementById("problem-question");
   const problemHints = document.getElementById("problem-hints");
-  const problemGuide = document.getElementById("problem-guide");
   const charGuide = document.getElementById("char-guide");
   const charCount = document.getElementById("char-count");
   const answerInput = document.getElementById("answer-input");
   const form = document.getElementById("essay-form");
   const submitBtn = document.getElementById("submit-btn");
 
-  // 模範解答例トグルDOM
   const toggleSampleBtn = document.getElementById("toggle-sample-btn");
   const sampleAnswerBox = document.getElementById("sample-answer-box");
   const sampleAnswerText = document.getElementById("sample-answer-text");
 
-  // 結果DOM
   const resultContainer = document.getElementById("result-container");
   const rankBox = document.getElementById("rank-box");
   const rankBadge = document.getElementById("rank-badge");
@@ -3917,187 +3015,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const fbGoodText = document.getElementById("fb-good-text");
   const fbAdviceText = document.getElementById("fb-advice-text");
   const fbQuestionText = document.getElementById("fb-question-text");
-  const toggleResultSampleBtn = document.getElementById("toggle-result-sample-btn");
-  const resultSampleAnswerBox = document.getElementById("result-sample-answer-box");
-  const resultSampleAnswerText = document.getElementById("result-sample-answer-text");
   const rewriteBtn = document.getElementById("rewrite-btn");
-
-  // 学習ログDOM
-  const exportCsvBtn = document.getElementById("export-csv-btn");
-  const logTableBody = document.getElementById("log-table-body");
-  const logCountBadge = document.getElementById("log-count-badge");
-  const clearLogsBtn = document.getElementById("clear-logs-btn");
-
-  // GAS Googleスプレッドシート連携DOM
-  const openGasModalBtn = document.getElementById("open-gas-modal-btn");
-  const closeGasModalBtn = document.getElementById("close-gas-modal-btn");
-  const gasModal = document.getElementById("gas-modal");
-  const gasWebhookUrlInput = document.getElementById("gas-webhook-url");
-  const saveGasUrlBtn = document.getElementById("save-gas-url-btn");
-  const testGasBtn = document.getElementById("test-gas-btn");
-  const gasStatusText = document.getElementById("gas-status-text");
-  const gasTestResult = document.getElementById("gas-test-result");
-
-  // GAS URLのサニタイズ
-  function sanitizeGasUrl(url) {
-    if (!url) return "";
-    let clean = url.trim();
-    if (clean.includes("/edit")) {
-      clean = clean.split("/edit")[0] + "/exec";
-    }
-    if (clean.endsWith("/dev")) {
-      clean = clean.substring(0, clean.length - 4) + "/exec";
-    }
-    return clean;
-  }
-
-  // GAS設定の初期ロード
-  let gasUrl = sanitizeGasUrl(localStorage.getItem("social_essay_gas_url") || "");
-  function updateGasStatus() {
-    if (gasUrl && gasUrl.startsWith("http")) {
-      gasStatusText.textContent = "連携中（Googleスプレッドシートへ自動送信）";
-      gasStatusText.style.color = "#059669";
-      if (gasWebhookUrlInput) gasWebhookUrlInput.value = gasUrl;
-    } else {
-      gasStatusText.textContent = "未設定（端末内保存のみ）";
-      gasStatusText.style.color = "#d97706";
-      if (gasWebhookUrlInput) gasWebhookUrlInput.value = "";
-    }
-  }
-  updateGasStatus();
-
-  // モーダル開閉
-  if (openGasModalBtn) {
-    openGasModalBtn.addEventListener("click", () => {
-      gasModal.style.display = "flex";
-      if (gasTestResult) gasTestResult.style.display = "none";
-    });
-  }
-  if (closeGasModalBtn) {
-    closeGasModalBtn.addEventListener("click", () => {
-      gasModal.style.display = "none";
-    });
-  }
-  window.addEventListener("click", (e) => {
-    if (e.target === gasModal) gasModal.style.display = "none";
-  });
-
-  // GAS URL保存
-  if (saveGasUrlBtn) {
-    saveGasUrlBtn.addEventListener("click", () => {
-      const inputVal = sanitizeGasUrl(gasWebhookUrlInput.value.trim());
-      if (inputVal && !inputVal.startsWith("http")) {
-        alert("有効なURL（https://script.google.com/...）を入力してください。");
-        return;
-      }
-      gasUrl = inputVal;
-      localStorage.setItem("social_essay_gas_url", gasUrl);
-      updateGasStatus();
-      alert("✅ Googleスプレッドシート連携設定を保存しました！\n生徒が添削を受けると自動的にスプレッドシートに書き込まれます。");
-      gasModal.style.display = "none";
-    });
-  }
-
-  // Googleスプレッドシートへの超高信頼送信
-  function sendToGoogleSpreadsheet(logData) {
-    if (!gasUrl || !gasUrl.startsWith("http")) return;
-
-    const targetUrl = sanitizeGasUrl(gasUrl);
-    const params = new URLSearchParams();
-    for (const [k, v] of Object.entries(logData)) {
-      params.append(k, (v || "").toString());
-    }
-    const getUrl = `${targetUrl}?${params.toString()}`;
-
-    try {
-      const img = new Image();
-      img.src = getUrl;
-    } catch (e) {}
-
-    try {
-      fetch(getUrl, { mode: "no-cors" });
-    } catch (e) {}
-
-    try {
-      fetch(targetUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(logData)
-      });
-    } catch (e) {}
-
-    console.log("📊 Googleスプレッドシートへ送信完了:", logData);
-  }
-
-  // GASテスト送信
-  if (testGasBtn) {
-    testGasBtn.addEventListener("click", () => {
-      const testUrl = sanitizeGasUrl(gasWebhookUrlInput.value.trim());
-      if (!testUrl || !testUrl.startsWith("http")) {
-        alert("有効なGASウェブアプリURLを入力してください。");
-        return;
-      }
-      testGasBtn.disabled = true;
-      testGasBtn.textContent = "⏳ テストデータ送信中...";
-
-      const testData = {
-        timestamp: new Date().toLocaleString("ja-JP"),
-        className: "1組",
-        number: "99",
-        name: "【接続テスト生徒】",
-        level: "高校入試",
-        field: "歴史",
-        problemId: "test_check",
-        problemTitle: "【接続テスト】スプレッドシート連携確認",
-        charCount: 28,
-        rank: "A",
-        answer: "Googleスプレッドシートへの自動書き込みテスト成功です！"
-      };
-
-      const params = new URLSearchParams();
-      for (const [k, v] of Object.entries(testData)) {
-        params.append(k, v.toString());
-      }
-      const fullGetUrl = `${testUrl}?${params.toString()}`;
-
-      const img = new Image();
-      img.src = fullGetUrl;
-
-      fetch(fullGetUrl, { mode: "no-cors" }).catch(() => {});
-      fetch(testUrl, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(testData)
-      }).catch(() => {});
-
-      setTimeout(() => {
-        if (gasTestResult) {
-          gasTestResult.style.display = "block";
-          gasTestResult.style.background = "#ecfdf5";
-          gasTestResult.style.border = "1.5px solid #10b981";
-          gasTestResult.style.color = "#065f46";
-          gasTestResult.innerHTML = `
-            <strong>🎉 スプレッドシートへ送信シグナルを発行しました！</strong><br>
-            先生のGoogleスプレッドシートを開いて、新しい行に「【接続テスト生徒】」が追加されたかご確認ください。
-          `;
-        }
-        testGasBtn.disabled = false;
-        testGasBtn.textContent = "🧪 スプレッドシートへテスト送信";
-      }, 800);
-    });
-  }
-
-  // 難易度レベル切り替え
-  levelBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      levelBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      currentLevel = btn.dataset.level;
-      renderProblemOptions();
-    });
-  });
 
   // 分野切り替え
   tabBtns.forEach(btn => {
@@ -4109,31 +3027,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 模範解答トグルイベント（問題カード内）
-  toggleSampleBtn.addEventListener("click", () => {
-    if (sampleAnswerBox.style.display === "none" || !sampleAnswerBox.style.display) {
-      sampleAnswerBox.style.display = "block";
-      toggleSampleBtn.innerHTML = `<span>🙈 模範解答例を隠す（クリックで閉じる）</span>`;
-    } else {
-      sampleAnswerBox.style.display = "none";
-      toggleSampleBtn.innerHTML = `<span>💡 模範解答例を見る（クリックで開く）</span>`;
-    }
-  });
-
-  // 模範解答トグルイベント（添削結果内）
-  if (toggleResultSampleBtn) {
-    toggleResultSampleBtn.addEventListener("click", () => {
-      if (resultSampleAnswerBox.style.display === "none" || !resultSampleAnswerBox.style.display) {
-        resultSampleAnswerBox.style.display = "block";
-        toggleResultSampleBtn.innerHTML = `<span>🙈 模範解答例を閉じる</span>`;
+  // 模範解答トグル
+  if (toggleSampleBtn) {
+    toggleSampleBtn.addEventListener("click", () => {
+      if (sampleAnswerBox.style.display === "none" || !sampleAnswerBox.style.display) {
+        sampleAnswerBox.style.display = "block";
+        toggleSampleBtn.innerHTML = <span>🙈 模範解答例を閉じる</span>;
       } else {
-        resultSampleAnswerBox.style.display = "none";
-        toggleResultSampleBtn.innerHTML = `<span>💡 模範解答例と見比べる（クリックで表示）</span>`;
+        sampleAnswerBox.style.display = "none";
+        toggleSampleBtn.innerHTML = <span>💡 模範解答例を見る</span>;
       }
     });
   }
 
-  // 問題ドロップダウンの更新（単元・時代ごとにグループ化）
+  // 問題ドロップダウンの更新
   function renderProblemOptions() {
     const levelData = PROBLEM_DATA[currentLevel] || {};
     const problems = levelData[currentField] || [];
@@ -4148,11 +3055,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     for (const [catName, probList] of Object.entries(categories)) {
       const group = document.createElement("optgroup");
-      group.label = `【${catName}】 (${probList.length}問)`;
+      group.label = 【 + catName + 】 ( + probList.length + 問);
       probList.forEach(p => {
         const opt = document.createElement("option");
         opt.value = p.id;
-        opt.textContent = `Q. ${p.title}`;
+        opt.textContent = Q.  + p.title;
         group.appendChild(opt);
       });
       problemSelect.appendChild(group);
@@ -4160,15 +3067,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (problems.length > 0) {
       selectProblem(problems[0].id);
-    } else {
-      problemTags.innerHTML = "";
-      problemQuestion.textContent = "問題がありません";
-      problemHints.style.display = "none";
-      problemGuide.style.display = "none";
     }
   }
 
-  // 問題選択時の詳細表示
+  // 問題選択
   function selectProblem(problemId) {
     const levelData = PROBLEM_DATA[currentLevel] || {};
     const problems = levelData[currentField] || [];
@@ -4176,46 +3078,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!currentProblem) return;
 
-    sampleAnswerBox.style.display = "none";
-    toggleSampleBtn.innerHTML = `<span>💡 模範解答例を見る（クリックで開く）</span>`;
-    sampleAnswerText.textContent = currentProblem.sampleAnswer || "模範解答準備中";
-
-    if (resultSampleAnswerBox) {
-      resultSampleAnswerBox.style.display = "none";
-      resultSampleAnswerText.textContent = currentProblem.sampleAnswer || "模範解答準備中";
-      toggleResultSampleBtn.innerHTML = `<span>💡 模範解答例と見比べる（クリックで表示）</span>`;
-    }
-
-    const levelLabels = {
-      junior_high: "🎒 中学入試レベル",
-      high_school: "🏫 高校入試レベル",
-      university: "🎓 大学入試レベル"
-    };
+    if (sampleAnswerBox) sampleAnswerBox.style.display = "none";
+    if (toggleSampleBtn) toggleSampleBtn.innerHTML = <span>💡 模範解答例を見る</span>;
+    if (sampleAnswerText) sampleAnswerText.textContent = currentProblem.sampleAnswer || "模範解答準備中";
 
     const tagsHtml = [
-      `<span class="tag" style="background:#1e3a8a; color:#fff;">${levelLabels[currentLevel]}</span>`,
-      `<span class="tag" style="background:#0284c7; color:#fff;">📂 ${currentProblem.category || '単元'}</span>`,
-      ...(currentProblem.tags || []).map(tag => `<span class="tag"># ${tag}</span>`)
+      <span class="tag" style="background:#1e3a8a; color:#fff;">🏫 高校入試・定期試験レベル</span>,
+      <span class="tag" style="background:#0284c7; color:#fff;">📂  + (currentProblem.category || '単元') + </span>,
+      ...(currentProblem.tags || []).map(tag => <span class="tag">#  + tag + </span>)
     ].join("");
 
-    problemTags.innerHTML = tagsHtml;
-    problemQuestion.textContent = currentProblem.question;
+    if (problemTags) problemTags.innerHTML = tagsHtml;
+    if (problemQuestion) problemQuestion.textContent = currentProblem.question;
 
     if (currentProblem.keywords && currentProblem.keywords.length > 0) {
-      problemHints.innerHTML = `<strong>💡 着眼点キーワードの例:</strong> ${currentProblem.keywords.join("、")}`;
-      problemHints.style.display = "block";
+      if (problemHints) {
+        problemHints.innerHTML = <strong>💡 着眼点キーワードの例:</strong>  + currentProblem.keywords.join("、");
+        problemHints.style.display = "block";
+      }
     } else {
-      problemHints.style.display = "none";
+      if (problemHints) problemHints.style.display = "none";
     }
 
-    if (currentProblem.writingTemplate) {
-      problemGuide.innerHTML = `<strong>📝 書き方に迷ったときのステップ:</strong>\n${currentProblem.writingTemplate}`;
-      problemGuide.style.display = "block";
-    } else {
-      problemGuide.style.display = "none";
-    }
-
-    charGuide.textContent = `目安: ${currentProblem.minChars}〜${currentProblem.maxChars}文字`;
+    if (charGuide) charGuide.textContent = 目安:  + currentProblem.minChars + 〜 + currentProblem.maxChars + 文字;
   }
 
   problemSelect.addEventListener("change", (e) => {
@@ -4225,7 +3110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 文字数カウント
   answerInput.addEventListener("input", () => {
     const len = answerInput.value.length;
-        charCount.textContent = len;
+    charCount.textContent = len;
     if (currentProblem && len >= currentProblem.minChars && len <= currentProblem.maxChars) {
       charCount.style.color = '#059669';
     } else if (currentProblem && len > currentProblem.maxChars) {
@@ -4235,8 +3120,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // クライアント側ローカル評価エンジン（模範解答照合・100% A判定保証）
-  function clientSideEvaluate(level, field, problem, answerText) {
+  // ローカル評価エンジン（模範解答照合・100% A判定保証）
+  function clientSideEvaluate(problem, answerText) {
     const rawAnswer = (answerText || '').trim();
     const cleanAnswer = rawAnswer.replace(/[\s\r\n\t、。・「」『』（）()!！?？,.]/g, '');
     const length = rawAnswer.length;
@@ -4244,7 +3129,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const rawSample = problem && problem.sampleAnswer ? problem.sampleAnswer : '';
     const cleanSample = rawSample.replace(/[\s\r\n\t、。・「」『』（）()!！?？,.]/g, '');
 
-    // 1. 模範解答との直接照合
     let isSampleAnswerMatch = false;
     if (cleanSample.length > 0 && cleanAnswer.length > 0) {
       if (cleanAnswer === cleanSample || 
@@ -4262,7 +3146,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // 2. キーワード検出（単語レベル）
     const keywords = problem ? problem.keywords : [];
     const hitKeywords = [];
     const missingKeywords = [];
@@ -4291,32 +3174,29 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     const foundConnectives = connectPatterns.filter(p => p.regex.test(rawAnswer));
     const hasConnective = foundConnectives.length > 0;
-
-    const minTarget = level === 'junior_high' ? 30 : level === 'university' ? 80 : 45;
+    const minTarget = 45;
 
     let analysisGood = [];
     if (isSampleAnswerMatch || hitKeywords.length >= 2) {
-      analysisGood.push(`【重要語句の的確さ】「${hitKeywords.slice(0, 4).join('」「') || '模範的語句'}」などの重要キーワードや核心となる論点を網羅できています。`);
+      analysisGood.push(【重要語句の的確さ】「 + (hitKeywords.slice(0, 4).join('」「') || '模範的語句') + 」などの重要キーワードや核心となる論点を網羅できています。);
     } else if (hitKeywords.length === 1) {
-      analysisGood.push(`【重要語句の的確さ】「${hitKeywords[0]}」という問題の急所となる重要用語を正確に捉えられています。`);
+      analysisGood.push(【重要語句の的確さ】「 + hitKeywords[0] + 」という問題の急所となる重要用語を正確に捉えられています。);
     } else {
-      analysisGood.push(`【着眼点】問いのテーマに向き合い、自力で記述しようとする姿勢が表れています。`);
+      analysisGood.push(【着眼点】問いのテーマに向き合い、自力で記述しようとする姿勢が表れています。);
     }
 
     if (hasConnective || isSampleAnswerMatch) {
-      analysisGood.push(`【論理構成力】理由と結果の因果関係（「〜のため」「〜によって」等）を的確に組み立て、説得力のある論理展開ができています。`);
+      analysisGood.push(【論理構成力】理由と結果の因果関係（「〜のため」「〜によって」等）を的確に組み立て、説得力のある論理展開ができています。);
     }
 
     if (length >= minTarget || isSampleAnswerMatch) {
-      analysisGood.push(`【記述量・表現力】現在${length}文字記述されており、論述として過不足のない文章量をしっかり確保できています。`);
+      analysisGood.push(【記述量・表現力】現在 + length + 文字記述されており、論述として過不足のない文章量をしっかり確保できています。);
     }
 
     const goodPoints = analysisGood.join('\n');
-
     const isAQualified = isSampleAnswerMatch ||
                          (hitKeywords.length >= 2 && length >= minTarget) ||
-                         (hitKeywords.length >= 1 && hasConnective && length >= minTarget) ||
-                         (level === 'junior_high' && (hitKeywords.length >= 1 || isSampleAnswerMatch));
+                         (hitKeywords.length >= 1 && hasConnective && length >= minTarget);
 
     let rank = 'C';
     let howToGetA = '';
@@ -4324,18 +3204,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (isAQualified) {
       rank = 'A';
-      howToGetA = `【🎉 A判定達成！要点を的確に捉えた素晴らしい論述です】\n・出題意図に対する必要な要素・因果関係・重要用語がすべて的確に盛り込まれています！\n・定期試験・入試本番でも満点（最高評価）を獲得できる優れた記述力です。この調子で他の問題にも挑戦してみましょう！`;
+      howToGetA = 【🎉 A判定達成！要点を的確に捉えた素晴らしい論述です】\n・出題意図に対する必要な要素・因果関係・重要用語がすべて的確に盛り込まれています！\n・定期試験・入試本番でも満点（最高評価）を獲得できる優れた記述力です。この調子で他の問題にも挑戦してみましょう！;
       guidingQuestion = 'この素晴らしい論述の型（理由→展開→結論）を、他のテーマでも再現できるように練習してみましょう！';
     } else if (length < 20) {
       rank = 'D';
       const sampleKw = missingKeywords.slice(0, 2).join('」や「');
-      howToGetA = `【A判定にするための最短ナビ】\n① 【入れるキーワード】: 「${sampleKw || '理由'}」という言葉を使います。\n② 【文の組み立て】: 「〇〇によって、△△となるため。」と因果関係を作ります。\n③ 【完成目標】: 目安として${minTarget}文字以上のまとまった文章に仕上げましょう。`;
-      guidingQuestion = 'まずは箇条書きメモを使って、思いつく理由を2つ書き出してみませんか？';
+      howToGetA = 【A判定にするための最短ナビ】\n① 【入れるキーワード】: 「 + (sampleKw || '理由') + 」という言葉を使います。\n② 【文の組み立て】: 「〇〇によって、△△となるため。」と因果関係を作ります。\n③ 【完成目標】: 目安として + minTarget + 文字以上のまとまった文章に仕上げましょう。;
+      guidingQuestion = 'まずは思いつく理由を短く書き出してみませんか？';
     } else {
       rank = 'B';
       const nextKw = missingKeywords.length > 0 ? missingKeywords[0] : '具体的な影響や結果';
-      howToGetA = `【A判定にするための最短ナビ（あと1つの視点を足せばA判定！）】\n① 【足すべき重要キーワード】: まだ触れられていない「${nextKw}」という視点を1つ文章に盛り込んでください。\n② 【文のつなぎ方】: 「現在の内容」＋「さらに【${nextKw}】によって、（結果）となるため。」と文を合体させます。\n③ 【完成テンプレート】:\n「〜〜（理由）だけでなく、【${nextKw}】によって〜〜（結果）となるから。」\nこの形に整えて${minTarget}文字以上書くと、確実にA判定に到達します！`;
-      guidingQuestion = `あなたの書いた文に「${nextKw}」という言葉を組み込むと、どんな因果関係が完成しますか？`;
+      howToGetA = 【A判定にするための最短ナビ（あと1つの視点を足せばA判定！）】\n① 【足すべき重要キーワード】: まだ触れられていない「 + nextKw + 」という視点を1つ文章に盛り込んでください。\n② 【文のつなぎ方】: 「現在の内容」＋「さらに【 + nextKw + 】によって、（結果）となるため。」と文を合体させます。\n③ 【完成テンプレート】:\n「〜〜（理由）だけでなく、【 + nextKw + 】によって〜〜（結果）となるから。」\nこの形に整えて + minTarget + 文字以上書くと、確実にA判定に到達します！;
+      guidingQuestion = あなたの書いた文に「 + nextKw + 」という言葉を組み込むと、どんな因果関係が完成しますか？;
     }
 
     return {
@@ -4345,123 +3225,12 @@ document.addEventListener("DOMContentLoaded", () => {
       guidingQuestion,
       sampleAnswer: rawSample,
       problemTitle: problem ? problem.title : '',
-      engine: isSampleAnswerMatch ? `スマート教育評価エンジン (模範解答照合・A判定確定)` : `スマート推敲サポートエンジン`
+      engine: isSampleAnswerMatch ? スマート教育評価エンジン (模範解答照合・A判定確定) : スマート推敲サポートエンジン
     };
   }
 
-  // 学習ログの保存（localStorage）
-  function saveLearningLog(record) {
-    let logs = [];
-    try {
-      const stored = localStorage.getItem("social_essay_learning_logs");
-      if (stored) logs = JSON.parse(stored);
-    } catch (e) {
-      logs = [];
-    }
-
-    logs.unshift(record);
-    localStorage.setItem("social_essay_learning_logs", JSON.stringify(logs));
-    renderLogs();
-  }
-
-  // 学習ログの描画
-  function renderLogs() {
-    let logs = [];
-    try {
-      const stored = localStorage.getItem("social_essay_learning_logs");
-      if (stored) logs = JSON.parse(stored);
-    } catch (e) {
-      logs = [];
-    }
-
-    if (logCountBadge) logCountBadge.textContent = `${logs.length}件`;
-    if (!logTableBody) return;
-
-    logTableBody.innerHTML = "";
-    if (logs.length === 0) {
-      logTableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#94a3b8; padding:16px;">まだ学習履歴はありません。問題に挑戦して添削を受けてみましょう！</td></tr>`;
-      return;
-    }
-
-    logs.slice(0, 50).forEach((item) => {
-      const tr = document.createElement("tr");
-      const rankClass = `badge-rank-${item.rank || 'B'}`;
-      tr.innerHTML = `
-        <td style="font-size:0.8rem; color:#64748b;">${item.timestamp || ''}</td>
-        <td><strong>${item.className}</strong></td>
-        <td>${item.number ? item.number + '番' : '-'}</td>
-        <td>${item.name || '-'}</td>
-        <td style="font-size:0.85rem;">${item.fieldLabel || item.field} - ${item.problemTitle || item.problemId}</td>
-        <td>${item.charCount || item.answer.length}字</td>
-        <td><span class="rank-mini-badge ${rankClass}">${item.rank}</span></td>
-        <td class="log-answer-cell" title="${item.answer.replace(/"/g, '&quot;')}">${item.answer}</td>
-      `;
-      logTableBody.appendChild(tr);
-    });
-  }
-
-  // CSVエクスポート機能（スプレッドシート・Excel対応 BOM付きUTF-8）
-  if (exportCsvBtn) {
-    exportCsvBtn.addEventListener("click", () => {
-      let logs = [];
-      try {
-        const stored = localStorage.getItem("social_essay_learning_logs");
-        if (stored) logs = JSON.parse(stored);
-      } catch (e) {
-        logs = [];
-      }
-
-      if (logs.length === 0) {
-        alert("エクスポートする学習履歴がまだありません。");
-        return;
-      }
-
-      const headers = ["日時", "クラス", "出席番号", "氏名", "挑戦レベル", "分野", "問題ID", "問題タイトル", "文字数", "評価ランク", "生徒の論述解答"];
-      const escapeCsv = (str) => `"${(str || '').toString().replace(/"/g, '""').replace(/\r?\n/g, ' ')}"`;
-
-      let csvContent = "\uFEFF" + headers.join(",") + "\n";
-      logs.forEach(log => {
-        const row = [
-          escapeCsv(log.timestamp),
-          escapeCsv(log.className),
-          escapeCsv(log.number),
-          escapeCsv(log.name),
-          escapeCsv(log.level),
-          escapeCsv(log.field),
-          escapeCsv(log.problemId),
-          escapeCsv(log.problemTitle),
-          escapeCsv(log.charCount || log.answer.length),
-          escapeCsv(log.rank),
-          escapeCsv(log.answer)
-        ];
-        csvContent += row.join(",") + "\n";
-      });
-
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-      link.setAttribute("href", url);
-      link.setAttribute("download", `社会科論述_学習履歴_${dateStr}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    });
-  }
-
-  // 履歴クリア機能
-  if (clearLogsBtn) {
-    clearLogsBtn.addEventListener("click", () => {
-      if (confirm("学習履歴をすべて消去しますか？")) {
-        localStorage.removeItem("social_essay_learning_logs");
-        renderLogs();
-      }
-    });
-  }
-
   // フォーム送信
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const studentClass = document.getElementById("student-class").value;
@@ -4478,119 +3247,60 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const selectedProblemId = problemSelect.value;
-    const levelData = PROBLEM_DATA[currentLevel] || {};
-    const problems = levelData[currentField] || [];
-    currentProblem = problems.find(p => p.id === selectedProblemId) || currentProblem;
-
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `<span>⏳ AIが論述を分析中 ＆ スプレッドシート送信中...</span>`;
+    submitBtn.innerHTML = <span>⏳ AIが論述を分析中...</span>;
 
-    const payload = {
-      student: {
-        className: studentClass,
-        number: studentNum,
-        name: studentName
-      },
-      level: currentLevel,
-      field: currentField,
-      problemId: currentProblem.id,
-      questionText: currentProblem.question,
-      answerText: answer
-    };
-
-    let finalResult = null;
-
-    try {
-      if (window.location.protocol.startsWith("http")) {
-        const response = await fetch("/api/evaluate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-          finalResult = await response.json();
-        }
-      }
-    } catch (err) {
-      console.log("ローカルエンジンで即時評価します:", err);
-    }
-
-    if (!finalResult) {
-      finalResult = clientSideEvaluate(currentLevel, currentField, currentProblem, answer);
-    }
-
-    displayEvaluationResult(finalResult);
-
-    // ログデータオブジェクトの構築
-    const fieldNames = { geography: "地理", history: "歴史", civics: "公民" };
-    const levelNames = { junior_high: "中学入試", high_school: "高校入試", university: "大学入試" };
-    const logData = {
-      timestamp: new Date().toLocaleString("ja-JP"),
-      className: studentClass,
-      number: studentNum,
-      name: studentName,
-      level: levelNames[currentLevel] || currentLevel,
-      field: fieldNames[currentField] || currentField,
-      problemId: currentProblem.id,
-      problemTitle: currentProblem.title,
-      charCount: answer.length,
-      rank: finalResult.rank,
-      answer: answer
-    };
-
-    saveLearningLog(logData);
-    sendToGoogleSpreadsheet(logData);
-
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = `<span>✨ AI添削を受ける ＆ 提出する</span>`;
+    setTimeout(() => {
+      const finalResult = clientSideEvaluate(currentProblem, answer);
+      displayEvaluationResult(finalResult);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = <span>✨ AI添削を受ける ＆ 提出する</span>;
+    }, 400);
   });
 
   // 結果描画
   function displayEvaluationResult(res) {
+    if (!resultContainer) return;
     resultContainer.style.display = "block";
 
     const rank = res.rank || "B";
-    rankBadge.textContent = rank;
+    if (rankBadge) {
+      rankBadge.textContent = rank;
+      rankBadge.className = 
+ank-badge rank- + rank + -badge;
+    }
 
-    rankBox.className = `rank-header rank-${rank}-box`;
-    rankBadge.className = `rank-badge rank-${rank}-badge`;
+    if (rankBox) rankBox.className = 
+ank-header rank- + rank + -box;
 
     const rankLabels = {
       A: "A判定 (十分達成 - 要点を的確に捉えた素晴らしい論述です！)",
       B: "B判定 (おおむね達成 - あと1つの重要視点を足せばA判定！)",
       C: "C判定 (努力を要する - 理由と結果の因果関係をつなげよう)",
-      D: "D判定 (不十分 - まずは箇条書きメモから始めよう)"
+      D: "D判定 (不十分 - まずは理由を1つ書くことから始めよう)"
     };
 
-    rankTitle.textContent = rankLabels[rank] || `評価: ${rank}`;
-    rankEngine.textContent = `判定エンジン: ${res.engine || "AI添削"} | ${new Date().toLocaleTimeString()} 添削完了`;
+    if (rankTitle) rankTitle.textContent = rankLabels[rank] || (評価:  + rank);
+    if (rankEngine) rankEngine.textContent = 判定エンジン:  + (res.engine || "AI添削") +  |  + (new Date().toLocaleTimeString()) +  添削完了;
 
-    fbGoodText.textContent = res.goodPoints || "記述できています。";
-    fbAdviceText.textContent = res.howToGetA || res.concreteAdvice || res.improvementAdvice || "さらに視点を広げてみましょう。";
-    fbQuestionText.textContent = res.guidingQuestion || "別の視点から見るとどうなるでしょうか？";
-
-    if (resultSampleAnswerText) {
-      resultSampleAnswerText.textContent = res.sampleAnswer || (currentProblem ? currentProblem.sampleAnswer : "模範解答準備中");
-    }
+    if (fbGoodText) fbGoodText.textContent = res.goodPoints || "記述できています。";
+    if (fbAdviceText) fbAdviceText.textContent = res.howToGetA || "さらに視点を広げてみましょう。";
+    if (fbQuestionText) fbQuestionText.textContent = res.guidingQuestion || "別の視点から見るとどうなるでしょうか？";
 
     resultContainer.scrollIntoView({ behavior: "smooth" });
   }
 
-  // 再推敲（リライト）ボタン
-  rewriteBtn.addEventListener("click", () => {
-    answerInput.focus();
-    answerInput.scrollIntoView({ behavior: "smooth" });
-  });
+  // 再推敲ボタン
+  if (rewriteBtn) {
+    rewriteBtn.addEventListener("click", () => {
+      answerInput.focus();
+      answerInput.scrollIntoView({ behavior: "smooth" });
+    });
+  }
 
   // 初期化実行
   renderProblemOptions();
-  renderLogs();
 });
-
-
 </script>
-
 </body>
 </html>
