@@ -3206,6 +3206,8 @@
     }
 ]
  } };
+var GAS_ENDPOINT_URL = "https://script.google.com/a/macros/kawasaki-edu.ed.jp/s/AKfycbx1oMbOUDUzk68JumJunzIimMCpaXM2Dkyc3pHLeQhU9cFit2jr7_Xofpo_rClqx58k/exec";
+
 (function() {
   var currentLevel = "high_school";
   var currentField = "history";
@@ -3369,6 +3371,28 @@
       });
     }
 
+    function sendToGoogleSpreadsheet(logData) {
+      if (!GAS_ENDPOINT_URL || GAS_ENDPOINT_URL.indexOf("http") !== 0) return;
+      try {
+        var params = new URLSearchParams();
+        for (var key in logData) {
+          params.append(key, (logData[key] || "").toString());
+        }
+        var getUrl = GAS_ENDPOINT_URL + "?" + params.toString();
+        var img = new Image();
+        img.src = getUrl;
+      } catch (e) {}
+
+      try {
+        fetch(GAS_ENDPOINT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(logData)
+        });
+      } catch (e) {}
+    }
+
     function clientSideEvaluate(problem, answerText) {
       var rawAnswer = (answerText || '').trim();
       var cleanAnswer = rawAnswer.replace(/[\s\r\n\t、。・「」『』（）()!！?？,.]/g, '');
@@ -3509,6 +3533,22 @@
         setTimeout(function() {
           var finalResult = clientSideEvaluate(currentProblem, answer);
           displayEvaluationResult(finalResult);
+          
+          // Googleスプレッドシートへ自動送信
+          var fieldLabels = { geography: "地理的分野", history: "歴史的分野", civics: "公民的分野" };
+          sendToGoogleSpreadsheet({
+            studentClass: studentClass,
+            studentNum: studentNum,
+            studentName: studentName,
+            field: fieldLabels[currentField] || currentField,
+            category: currentProblem ? currentProblem.category : "",
+            problemTitle: currentProblem ? currentProblem.title : "",
+            answer: answer,
+            charCount: answer.length,
+            rank: finalResult.rank,
+            howToGetA: finalResult.howToGetA
+          });
+
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.innerHTML = "<span>✨ AI添削を受ける ＆ 提出する</span>";
@@ -3537,7 +3577,7 @@
       };
 
       if (rankTitle) rankTitle.textContent = rankLabels[rank] || ("評価: " + rank);
-      if (rankEngine) rankEngine.textContent = "判定エンジン: " + (res.engine || "AI添削") + " | " + (new Date().toLocaleTimeString()) + " 添削完了";
+      if (rankEngine) rankEngine.textContent = "判定エンジン: " + (res.engine || "AI添削") + " | 📊 スプレッドシート記録完了 | " + (new Date().toLocaleTimeString()) + " 添削完了";
 
       if (fbGoodText) fbGoodText.textContent = res.goodPoints || "記述できています。";
       if (fbAdviceText) fbAdviceText.textContent = res.howToGetA || "さらに視点を広げてみましょう。";
