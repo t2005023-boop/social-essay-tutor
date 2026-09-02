@@ -42,11 +42,25 @@
     .problem-tags { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
     .tag { font-size: 0.8rem; background: #ffffff; color: #334155; padding: 4px 12px; border-radius: 9999px; font-weight: 700; border: 1px solid #e2e8f0; }
     .problem-question { font-size: 1.15rem; font-weight: 800; line-height: 1.7; color: #0f172a; margin-bottom: 16px; }
-    .keywords-hint { font-size: 0.9rem; color: #0369a1; background: #e0f2fe; border: 1px solid #bae6fd; padding: 12px 16px; border-radius: var(--radius-md); margin-bottom: 14px; line-height: 1.6; }
-    .toggle-sample-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; background: #f0fdf4; color: #15803d; border: 1.5px solid #bbf7d0; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 800; cursor: pointer; }
-    .sample-answer-box { background: #f0fdf4; border: 1.8px solid #86efac; border-radius: var(--radius-lg); padding: 16px; margin-top: 12px; }
+
+    /* アクションボタンバー（ヒント & 模範解答） */
+    .problem-actions-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .toggle-hint-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; background: #fffbeb; color: #b45309; border: 1.5px solid #fde68a; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+    .toggle-hint-btn:hover { background: #fef3c7; transform: translateY(-1px); }
+    .toggle-sample-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; background: #f0fdf4; color: #15803d; border: 1.5px solid #bbf7d0; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+    .toggle-sample-btn:hover { background: #dcfce7; transform: translateY(-1px); }
+
+    /* ヒント表示ボックス */
+    .hint-box { background: #fffbeb; border: 1.8px solid #fcd34d; border-radius: var(--radius-lg); padding: 16px; margin-top: 12px; animation: fadeIn 0.25s ease-out; }
+    .hint-header { font-weight: 800; color: #92400e; font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .hint-keywords { font-size: 0.92rem; color: #0369a1; background: #e0f2fe; border: 1px solid #bae6fd; padding: 10px 14px; border-radius: var(--radius-md); margin-bottom: 10px; line-height: 1.5; font-weight: 600; }
+    .hint-template { font-size: 0.94rem; color: #78350f; background: #ffffff; border: 1px solid #fde68a; padding: 12px 14px; border-radius: var(--radius-md); line-height: 1.7; white-space: pre-line; }
+
+    /* 模範解答ボックス */
+    .sample-answer-box { background: #f0fdf4; border: 1.8px solid #86efac; border-radius: var(--radius-lg); padding: 16px; margin-top: 12px; animation: fadeIn 0.25s ease-out; }
     .sample-answer-header { font-weight: 800; color: #166534; font-size: 0.95rem; margin-bottom: 8px; }
     .sample-answer-content { font-size: 0.96rem; color: #14532d; line-height: 1.7; background: #ffffff; padding: 14px 16px; border-radius: var(--radius-md); border: 1px solid #bbf7d0; }
+
     .char-counter-bar { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: #64748b; margin-top: 10px; font-weight: 700; }
     .submit-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; border-radius: var(--radius-lg); font-size: 1.15rem; font-weight: 900; cursor: pointer; box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35); margin-top: 8px; }
     .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45); }
@@ -72,13 +86,14 @@
     .retry-action { text-align: center; margin-top: 24px; }
     .retry-btn { padding: 14px 32px; background: #ffffff; border: 2px solid #2563eb; border-radius: var(--radius-lg); color: #2563eb; font-size: 1rem; font-weight: 800; cursor: pointer; }
     .retry-btn:hover { background: #2563eb; color: #ffffff; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
 
 <div class="container">
   <header>
-    <div class="header-badge">✨ 学習指導要領準拠・全問模範解答付き</div>
+    <div class="header-badge">✨ 学習指導要領準拠・全問ヒント＆模範解答付き</div>
     <h1>社会科 論述力向上トレーニング</h1>
     <p>問いに対する多面的な視点と論理的な記述力を育てるAI添削システム</p>
   </header>
@@ -132,16 +147,28 @@
       <div id="problem-card" class="problem-box">
         <div class="problem-tags" id="problem-tags"></div>
         <div class="problem-question" id="problem-question"></div>
-        <div class="keywords-hint" id="problem-hints"></div>
         
-        <div class="sample-answer-wrapper">
+        <!-- アクションボタン（ヒントを見る ＆ 模範解答を見る） -->
+        <div class="problem-actions-bar">
+          <button type="button" id="toggle-hint-btn" class="toggle-hint-btn">
+            <span>🧩 書き方のヒントを見る（クリックで開く）</span>
+          </button>
           <button type="button" id="toggle-sample-btn" class="toggle-sample-btn">
             <span>💡 模範解答例を見る</span>
           </button>
-          <div id="sample-answer-box" class="sample-answer-box" style="display: none;">
-            <div class="sample-answer-header">📖 模範解答例</div>
-            <div id="sample-answer-text" class="sample-answer-content"></div>
-          </div>
+        </div>
+
+        <!-- ヒント表示ボックス（クリックで開閉） -->
+        <div id="hint-box" class="hint-box" style="display: none;">
+          <div class="hint-header">🧩 論述の組み立てヒント</div>
+          <div id="hint-keywords" class="hint-keywords"></div>
+          <div id="hint-template" class="hint-template"></div>
+        </div>
+
+        <!-- 模範解答ボックス（クリックで開閉） -->
+        <div id="sample-answer-box" class="sample-answer-box" style="display: none;">
+          <div class="sample-answer-header">📖 模範解答例</div>
+          <div id="sample-answer-text" class="sample-answer-content"></div>
         </div>
       </div>
     </div>
@@ -154,7 +181,7 @@
 
       <div class="form-group">
         <label for="answer-input">解答入力欄 <span class="required">*</span></label>
-        <textarea id="answer-input" rows="6" placeholder="問いに対する理由や背景、多面的な視点を意識して自分の言葉でまとめましょう..." required></textarea>
+        <textarea id="answer-input" rows="6" placeholder="ヒントを参考にしながら、理由や背景を「〜のため」「〜によって」などの言葉でつなげてまとめましょう..." required></textarea>
         <div class="char-counter-bar">
           <span id="char-guide">目安: 70〜160文字</span>
           <span>現在の文字数: <strong id="char-count">0</strong> 文字</span>
