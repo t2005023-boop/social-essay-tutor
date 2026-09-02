@@ -1,33 +1,478 @@
-﻿<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>社会科 論述トレーニング＆AI添削アプリ (Chromebook / Googleスプレッドシート対応)</title>
-  <link rel="stylesheet" href="css/style.css?v=20260829102934">
+  <title>社会科 論述力向上トレーニング</title>
+  <style>
+    /* ==========================================================
+       🌟 超洗練・スタイリッシュ モダンエデュケーションUI
+       ========================================================== */
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+      --accent: #10b981;
+      --accent-dark: #059669;
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      --shadow-hover: 0 20px 30px -10px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", Meiryo, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.7;
+      padding: 36px 16px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    /* 🎓 ヘッダー */
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+      color: #1e40af;
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.15);
+    }
+
+    header h1 {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-sub);
+      font-size: 0.98rem;
+    }
+
+    /* 📦 カード */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      padding: 28px;
+      margin-bottom: 24px;
+      transition: all 0.25s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .step-badge {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.25);
+    }
+
+    /* 📝 フォーム入力 */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+      color: #334155;
+    }
+
+    .required {
+      color: #ef4444;
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.8px solid #cbd5e1;
+      border-radius: var(--radius-lg);
+      font-size: 0.98rem;
+      background-color: #ffffff;
+      color: #0f172a;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+    }
+
+    /* 🏷️ 分野選択タブ */
+    .field-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border: 1.8px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      font-weight: 800;
+      font-size: 1rem;
+      color: #475569;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+      transform: translateY(-1px);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      border-color: #1d4ed8;
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* 📖 問題表示カード */
+    .problem-box {
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1.8px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-top: 14px;
+    }
+
+    .problem-tags {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 0.8rem;
+      background: #ffffff;
+      color: #334155;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-weight: 700;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .problem-question {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.7;
+      color: #0f172a;
+      margin-bottom: 16px;
+    }
+
+    .keywords-hint {
+      font-size: 0.9rem;
+      color: #0369a1;
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    /* 💡 模範解答アコーディオン */
+    .toggle-sample-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1.5px solid #bbf7d0;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toggle-sample-btn:hover {
+      background: #dcfce7;
+      transform: translateY(-1px);
+    }
+
+    .sample-answer-box {
+      background: #f0fdf4;
+      border: 1.8px solid #86efac;
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-top: 12px;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .sample-answer-header {
+      font-weight: 800;
+      color: #166534;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .sample-answer-content {
+      font-size: 0.96rem;
+      color: #14532d;
+      line-height: 1.7;
+      background: #ffffff;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid #bbf7d0;
+    }
+
+    /* 🧮 文字数カウンター */
+    .char-counter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-top: 10px;
+      font-weight: 700;
+    }
+
+    /* 🚀 送信ボタン */
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-lg);
+      font-size: 1.15rem;
+      font-weight: 900;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* 🏆 添削結果 */
+    #result-container {
+      display: none;
+      border: 2px solid #3b82f6;
+      animation: slideUp 0.35s ease-out;
+    }
+
+    .rank-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 22px;
+    }
+
+    .rank-A-box { background: #ecfdf5; border: 1.8px solid #a7f3d0; }
+    .rank-B-box { background: #eff6ff; border: 1.8px solid #bfdbfe; }
+    .rank-C-box { background: #fffbeb; border: 1.8px solid #fde68a; }
+    .rank-D-box { background: #fef2f2; border: 1.8px solid #fecaca; }
+
+    .rank-badge {
+      font-size: 2.6rem;
+      font-weight: 900;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    .rank-A-badge { background: #10b981; }
+    .rank-B-badge { background: #3b82f6; }
+    .rank-C-badge { background: #f59e0b; }
+    .rank-D-badge { background: #ef4444; }
+
+    .rank-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .rank-subtitle {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 3px;
+    }
+
+    /* フィードバックカード */
+    .feedback-section {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .fb-heading {
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .fb-good { color: #059669; }
+    .fb-improve { color: #d97706; }
+    .fb-question { color: #4f46e5; }
+
+    .fb-body {
+      font-size: 0.96rem;
+      line-height: 1.75;
+      color: #1e293b;
+      white-space: pre-line;
+    }
+
+    .retry-action {
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .retry-btn {
+      padding: 14px 32px;
+      background: #ffffff;
+      border: 2px solid #2563eb;
+      border-radius: var(--radius-lg);
+      color: #2563eb;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+    }
+
+    .retry-btn:hover {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
   <header>
+    <div class="header-badge">✨ 学習指導要領準拠・全問模範解答付き</div>
     <h1>社会科 論述力向上トレーニング</h1>
-    <p>Chromebook対応！単元・時代別絞り込み機能 ＆ 高校入試標準114問（全問模範解答付き）</p>
+    <p>問いに対する多面的な視点と論理的な記述力を育てるAI添削システム</p>
   </header>
 
-  <!-- Googleスプレッドシート連携ステータスバー -->
-  <div class="gas-status-bar" id="gas-status-bar">
-    <div class="gas-status-info">
-      <span class="gas-icon">📊</span>
-      <span>Googleスプレッドシート連携: <strong id="gas-status-text">未設定（端末内保存のみ）</strong></span>
-    </div>
-    <button type="button" id="open-gas-modal-btn" class="gas-config-btn">⚙️ スプレッドシート連携設定</button>
-  </div>
-
   <form id="essay-form">
-    <!-- ステップ1: 生徒情報 -->
+    <!-- STEP 1: 生徒情報 -->
     <div class="card">
       <div class="card-title">
-        <span class="badge-step">STEP 1</span> 生徒情報を入力
+        <span class="step-badge">STEP 1</span> 生徒情報を入力
       </div>
       <div class="grid-3">
         <div class="form-group">
@@ -52,82 +497,52 @@
       </div>
     </div>
 
-    <!-- ステップ2: レベルと分野と問題の選択 -->
+    <!-- STEP 2: 分野と問題を選択 -->
     <div class="card">
       <div class="card-title">
-        <span class="badge-step">STEP 2</span> 挑戦レベル・分野・単元を選択
-      </div>
-
-      <!-- 難易度レベル選択タブ -->
-      <label style="margin-bottom: 8px;">🎯 1. 挑戦する入試レベルを選択:</label>
-      <div class="level-tabs">
-        <button type="button" class="level-tab-btn" data-level="junior_high">🎒 中学校入試レベル</button>
-        <button type="button" class="level-tab-btn active" data-level="high_school">🏫 高校入試・中学3年レベル (全114問)</button>
-        <button type="button" class="level-tab-btn" data-level="university">🎓 大学入試レベル</button>
+        <span class="step-badge">STEP 2</span> 分野と問題を選択
       </div>
 
       <!-- 分野タブ -->
-      <label style="margin-bottom: 8px; margin-top: 14px;">📚 2. 演習分野を選択:</label>
       <div class="field-tabs">
-        <button type="button" class="tab-btn active" data-field="geography">🌏 地理的分野</button>
-        <button type="button" class="tab-btn" data-field="history">📜 歴史的分野</button>
+        <button type="button" class="tab-btn" data-field="geography">🌏 地理的分野</button>
+        <button type="button" class="tab-btn active" data-field="history">📜 歴史的分野</button>
         <button type="button" class="tab-btn" data-field="civics">🏛️ 公民的分野</button>
       </div>
 
-      <!-- 単元・小分野（カテゴリ・時代）絞り込みドロップダウン -->
-      <div class="form-group" style="margin-top: 14px; background: #f0f9ff; padding: 12px; border-radius: 8px; border: 1.5px solid #bae6fd;">
-        <label for="category-select" style="color: #0369a1; font-weight: 700;">
-          📂 3. 単元・時代（小分野）で絞り込む:
-        </label>
-        <select id="category-select" style="border-color: #7dd3fc; font-weight: 600;"></select>
-      </div>
-
-      <div class="form-group" style="margin-top: 14px;">
-        <label for="problem-select">📖 4. 演習問題を選択してください:</label>
+      <div class="form-group">
+        <label for="problem-select">演習問題を選択（時代・単元順）</label>
         <select id="problem-select"></select>
       </div>
 
       <!-- 選択された問題の表示 -->
-      <div id="problem-card" class="problem-card">
+      <div id="problem-card" class="problem-box">
         <div class="problem-tags" id="problem-tags"></div>
         <div class="problem-question" id="problem-question"></div>
         <div class="keywords-hint" id="problem-hints"></div>
         
-        <!-- 初心者向け書き方ステップガイド -->
-        <div class="writing-guide-box" id="problem-guide"></div>
-
-        <!-- 模範解答例アコーディオン（クリックで開閉） -->
-        <div class="sample-answer-wrapper" style="margin-top: 14px;">
+        <!-- 模範解答アコーディオン -->
+        <div class="sample-answer-wrapper">
           <button type="button" id="toggle-sample-btn" class="toggle-sample-btn">
-            <span>💡 模範解答例を見る（クリックで開く）</span>
+            <span>💡 模範解答例を見る</span>
           </button>
           <div id="sample-answer-box" class="sample-answer-box" style="display: none;">
             <div class="sample-answer-header">📖 模範解答例</div>
             <div id="sample-answer-text" class="sample-answer-content"></div>
-            <div class="sample-answer-note">※ まずは自力で解答を作成してから、自分の文章と比較してみましょう！</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ステップ3: 論述記述（下書きメモ機能付き） -->
+    <!-- STEP 3: 論述記述 -->
     <div class="card">
       <div class="card-title">
-        <span class="badge-step">STEP 3</span> あなたの論述を記述
+        <span class="step-badge">STEP 3</span> あなたの論述を記述
       </div>
 
-      <!-- 箇条書きメモ用の補助アコーディオン -->
-      <details class="scratchpad-details">
-        <summary class="scratchpad-summary">📝 【論述が苦手な人向け】まず箇条書きでアイデアをメモする（クリックで開閉）</summary>
-        <div class="scratchpad-content">
-          <p class="scratchpad-tip">いきなり文章を書かずに、思いついた理由や用語をメモしてみましょう！</p>
-          <textarea id="scratchpad-input" rows="3" placeholder="・理由①：〇〇だから&#10;・理由②：その結果、〇〇になるから"></textarea>
-        </div>
-      </details>
-
-      <div class="form-group" style="margin-top: 14px;">
-        <label for="answer-input">論述・清書欄 <span class="required">*</span></label>
-        <textarea id="answer-input" rows="6" placeholder="箇条書きにしたアイデアを「なぜなら〜」「その結果〜」などの言葉でつなげて文章にまとめましょう..." required></textarea>
+      <div class="form-group">
+        <label for="answer-input">解答入力欄 <span class="required">*</span></label>
+        <textarea id="answer-input" rows="6" placeholder="問いに対する理由や背景、多面的な視点を意識して自分の言葉でまとめましょう..." required></textarea>
         <div class="char-counter-bar">
           <span id="char-guide">目安: 70〜160文字</span>
           <span>現在の文字数: <strong id="char-count">0</strong> 文字</span>
@@ -143,7 +558,7 @@
   <!-- 添削結果カード -->
   <div id="result-container" class="card">
     <div class="card-title">
-      <span class="badge-step">RESULT</span> 添削・推敲フィードバック
+      <span class="step-badge">RESULT</span> 添削・推敲フィードバック
     </div>
 
     <!-- ランクヘッダー -->
@@ -155,23 +570,23 @@
       </div>
     </div>
 
-    <!-- 良かった点（詳細分析） -->
+    <!-- 良かった点 -->
     <div class="feedback-section">
       <div class="fb-heading fb-good">
-        <span>👍</span> 良かった点（捉えられている視点の詳細分析）
+        <span>👍</span> 良かった点（捉えられている視点）
       </div>
       <div id="fb-good-text" class="fb-body"></div>
     </div>
 
-    <!-- 具体的推敲ステップ・A判定ナビ -->
-    <div class="feedback-section fb-highlight-section">
+    <!-- A判定にするためのアドバイス -->
+    <div class="feedback-section">
       <div class="fb-heading fb-improve">
-        <span>🌟</span> A判定にするための最短ナビ（加筆・修正のポイント）
+        <span>💡</span> A判定にするためのアドバイス（推敲のポイント）
       </div>
-      <div id="fb-advice-text" class="fb-body fb-advice-body"></div>
+      <div id="fb-advice-text" class="fb-body"></div>
     </div>
 
-    <!-- 思考を深める問いかけ -->
+    <!-- 問いかけ -->
     <div class="feedback-section">
       <div class="fb-heading fb-question">
         <span>❓</span> 自力で考えを深める推敲の問いかけ
@@ -179,165 +594,14 @@
       <div id="fb-question-text" class="fb-body"></div>
     </div>
 
-    <!-- 添削結果内の模範解答トグル -->
-    <div class="feedback-section" style="border-top: 1px dashed #cbd5e1; padding-top: 14px; margin-top: 14px;">
-      <button type="button" id="toggle-result-sample-btn" class="toggle-sample-btn" style="background:#f1f5f9; color:#334155; border-color:#cbd5e1;">
-        <span>💡 模範解答例と見比べる（クリックで表示）</span>
-      </button>
-      <div id="result-sample-answer-box" class="sample-answer-box" style="display: none; margin-top: 10px;">
-        <div class="sample-answer-header">📖 模範解答例</div>
-        <div id="result-sample-answer-text" class="sample-answer-content"></div>
-      </div>
-    </div>
-
     <div class="retry-action">
-      <button type="button" id="rewrite-btn" class="retry-btn">📝 アドバイスを参考に再推敲（清書欄へ戻る）</button>
-    </div>
-  </div>
-
-  <!-- 学習履歴・提出ログカード -->
-  <div class="card" style="margin-top: 24px;">
-    <div class="card-title" style="justify-content: space-between; flex-wrap: wrap;">
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <span class="badge-step" style="background:#059669;">LOGS</span>
-        <span>📊 学習履歴・提出ログ記録</span>
-        <span id="log-count-badge" class="tag" style="background:#d1fae5; color:#065f46; font-size:0.8rem;">0件</span>
-      </div>
-      <div style="display: flex; gap: 8px; margin-top: 6px;">
-        <button type="button" id="export-csv-btn" class="log-action-btn export-btn">
-          <span>📥 CSVダウンロード</span>
-        </button>
-        <button type="button" id="clear-logs-btn" class="log-action-btn clear-btn">
-          <span>🗑️ 履歴消去</span>
-        </button>
-      </div>
-    </div>
-
-    <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 12px;">
-      ※ Chromebookで添削を受けると、設定した教員のGoogleスプレッドシートへ自動送信・追記されます。
-    </p>
-
-    <div class="table-responsive">
-      <table class="log-table">
-        <thead>
-          <tr>
-            <th>提出日時</th>
-            <th>クラス</th>
-            <th>番号</th>
-            <th>氏名</th>
-            <th>演習問題</th>
-            <th>文字数</th>
-            <th>判定</th>
-            <th>論述内容</th>
-          </tr>
-        </thead>
-        <tbody id="log-table-body">
-          <!-- JSで自動描画 -->
-        </tbody>
-      </table>
+      <button type="button" id="rewrite-btn" class="retry-btn">📝 このフィードバックをもとに再推敲（書き直す）</button>
     </div>
   </div>
 </div>
 
-<!-- Googleスプレッドシート連携設定モーダル -->
-<div id="gas-modal" class="modal-overlay" style="display: none;">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2>📊 Googleスプレッドシート連携設定（教員用）</h2>
-      <button type="button" id="close-gas-modal-btn" class="modal-close-btn">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div style="background:#eff6ff; border:1.5px solid #bfdbfe; border-radius:8px; padding:12px; margin-bottom:14px;">
-        <strong style="color:#1e40af;">💡 確実に書き込むための設定方法:</strong>
-        <p style="font-size: 0.86rem; color: #1e3a8a; margin-top:4px;">
-          Googleスプレッドシートの「拡張機能」➔「Apps Script」に下記のコードを貼り付け、<strong>アクセスできるユーザーを「全員」</strong>にしてデプロイしたURLを貼り付けてください。
-        </p>
-      </div>
-
-      <div class="form-group">
-        <label for="gas-webhook-url">Google Apps Script (GAS) ウェブアプリURL:</label>
-        <input type="text" id="gas-webhook-url" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
-      </div>
-
-      <div style="display: flex; gap: 10px; margin-top: 12px; margin-bottom: 16px;">
-        <button type="button" id="save-gas-url-btn" class="submit-btn" style="padding: 10px 16px; font-size: 0.95rem;">💾 連携設定を保存</button>
-        <button type="button" id="test-gas-btn" class="retry-btn" style="padding: 10px 16px; background:#ecfdf5; border-color:#10b981; color:#065f46;">🧪 スプレッドシートへテスト送信</button>
-      </div>
-
-      <div id="gas-test-result" style="display:none; padding:12px; border-radius:6px; font-size:0.86rem; margin-bottom:14px;"></div>
-
-      <details class="gas-guide-details" open>
-        <summary>📖 【100%確実に書き込める】Apps Script コード（コピーして貼り付け）</summary>
-        <div class="gas-guide-content">
-          <ol style="padding-left: 20px; font-size: 0.85rem; line-height: 1.7; color: #334155;">
-            <li>スプレッドシートのメニュー「<strong>拡張機能</strong>」➔「<strong>Apps Script</strong>」を開きます。</li>
-            <li>エディタの内容をすべて消去し、以下のスクリプトを貼り付けて「<strong>保存（💾アイコン）</strong>」します：</li>
-          </ol>
-          <pre class="code-block"><code>function recordToSheet(params) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(["日時", "クラス", "出席番号", "氏名", "挑戦レベル", "分野", "問題ID", "問題タイトル", "文字数", "評価ランク", "生徒の論述解答"]);
-    sheet.getRange("A1:K1").setFontWeight("bold").setBackground("#e2e8f0");
-  }
-  sheet.appendRow([
-    params.timestamp || new Date().toLocaleString("ja-JP"),
-    params.className || "",
-    params.number || "",
-    params.name || "",
-    params.level || "",
-    params.field || "",
-    params.problemId || "",
-    params.problemTitle || "",
-    params.charCount || 0,
-    params.rank || "",
-    params.answer || ""
-  ]);
-}
-
-// GETリクエスト対応（最も確実・CORS制限ゼロ）
-function doGet(e) {
-  try {
-    var p = (e && e.parameter) ? e.parameter : {};
-    recordToSheet(p);
-    return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ status: "error", error: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-// POSTリクエスト対応
-function doPost(e) {
-  try {
-    var data = {};
-    if (e && e.postData && e.postData.contents) {
-      try { data = JSON.parse(e.postData.contents); } catch (err) { data = e.parameter || {}; }
-    } else if (e && e.parameter) {
-      data = e.parameter;
-    }
-    recordToSheet(data);
-    return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ status: "error", error: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}</code></pre>
-          <ol start="3" style="padding-left: 20px; font-size: 0.85rem; line-height: 1.7; color: #334155; margin-top: 8px;">
-            <li>右上の「<strong>デプロイ</strong>」➔「<strong>新しいデプロイ</strong>」をクリックします。</li>
-            <li>種類の選択（歯車アイコン）で「<strong>ウェブアプリ</strong>」を選択します。</li>
-            <li>説明: `社会科ログ`, 次のユーザーとして実行: 「<strong>自分</strong>」, アクセスできるユーザー: 「<strong>全員</strong>」を選択して「デプロイ」を押します。</li>
-            <li>表示された「<strong>ウェブアプリのURL</strong>」（末尾が <code>/exec</code> のもの）をコピーして、上の入力欄に貼り付けて保存してください！</li>
-          </ol>
-        </div>
-      </details>
-    </div>
-  </div>
-</div>
-
-<script src="js/problems.js?v=20260829102934"></script>
-<script src="js/app.js?v=20260829102934"></script>
+<script src="js/problems.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
 
